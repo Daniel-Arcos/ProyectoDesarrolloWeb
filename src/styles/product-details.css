@@ -1,0 +1,8 @@
+.item-imagen:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Cambia la posición y transparencia de la sombra */
+}
+
+#productDescription {
+    max-height: 150px;
+    overflow: hidden;
+}
