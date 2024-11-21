@@ -1,4 +1,4 @@
-package com.web.aldalu.aldalu.enums;
+package com.web.aldalu.aldalu.models.enums;
 
 public enum Categoria {
     ELECTRONICA,
