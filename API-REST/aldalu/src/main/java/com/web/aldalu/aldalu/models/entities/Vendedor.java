@@ -14,4 +14,5 @@ public class Vendedor extends Usuario {
     private String nombreVendedor;
     private String telefonoCelular;
     
+    
 }

@@ -36,4 +36,8 @@ public class Tienda {
     @OneToMany(mappedBy = "tienda", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Producto> productos;
+
+    @OneToMany(mappedBy = "tienda", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<PedidoTienda> pedidos;
 }
