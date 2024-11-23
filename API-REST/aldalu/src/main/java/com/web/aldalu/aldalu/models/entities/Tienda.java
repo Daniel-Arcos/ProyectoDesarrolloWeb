@@ -29,10 +29,6 @@ public class Tienda {
     private String descripcion;
     private String nombreTienda;
 
-    @ManyToOne
-    @JoinColumn(name = "vendedor_id")
-    private Vendedor vendedor;
-
     @OneToMany(mappedBy = "tienda", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Producto> productos;

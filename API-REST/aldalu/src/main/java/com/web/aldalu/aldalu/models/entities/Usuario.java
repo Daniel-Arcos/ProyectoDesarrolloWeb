@@ -1,5 +1,6 @@
 package com.web.aldalu.aldalu.models.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,5 +23,7 @@ public abstract class Usuario {
     private Long id;
 
     private String contrasena;
+
+    @Column(unique = true)
     private String correoElectronico;
 }
