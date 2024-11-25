@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.web.aldalu.aldalu.models.dtos.VendedorDTO;
 import com.web.aldalu.aldalu.models.entities.Vendedor;
 import com.web.aldalu.aldalu.services.impl.VendedorServiceImpl;
+import com.web.aldalu.aldalu.utils.EndpointsConstants;
 
 import jakarta.validation.Valid;
 import lombok.NonNull;
@@ -26,7 +27,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 
 @RestController
-@RequestMapping("api/vendedores")
+@RequestMapping(EndpointsConstants.ENDPOINT_VENDEDORES)
 @RequiredArgsConstructor
 public class VendedorController {
     

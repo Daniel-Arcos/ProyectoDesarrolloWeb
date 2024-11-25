@@ -1,6 +1,7 @@
 package com.web.aldalu.aldalu.models.dtos;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.web.aldalu.aldalu.models.enums.TipoUsuario;
 
 import lombok.Data;
 
@@ -9,4 +10,5 @@ import lombok.Data;
 public class UsuarioDTO {
     private Long id;
     private String correoElectronico;
+    private TipoUsuario tipoUsuario;
 }

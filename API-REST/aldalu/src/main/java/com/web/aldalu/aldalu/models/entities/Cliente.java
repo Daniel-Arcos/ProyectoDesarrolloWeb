@@ -12,15 +12,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Cliente extends Usuario {
     
-    private String nombreNacimiento;
+    private String nombre;
     private String telefonoCelular;
     private LocalDate fechaNacimiento;
 

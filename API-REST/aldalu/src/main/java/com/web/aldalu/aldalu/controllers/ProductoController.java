@@ -15,13 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.web.aldalu.aldalu.models.entities.Producto;
 import com.web.aldalu.aldalu.services.impl.ProductoServiceImpl;
+import com.web.aldalu.aldalu.utils.EndpointsConstants;
 
 import jakarta.validation.Valid;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("api/productos")
+@RequestMapping(EndpointsConstants.ENDPOINT_PRODUCTOS)
 @RequiredArgsConstructor
 public class ProductoController {
 
