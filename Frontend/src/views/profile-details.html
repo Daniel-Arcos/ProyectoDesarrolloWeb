@@ -138,10 +138,12 @@
                         <input type="date" class="col d-none form-control border bg-light profile-input" id="birthDateInput">
                     </div>
                 </div>
-                <button class="btn btn-lg w-50 btn-primary my-4 mt-3 rounded-5" id="editButton1" onclick="editButton1OnClick()">
-                    <i class="bi bi-pencil"></i>
-                    <h7 class="fw-bold m-2 fs-5">Editar</h7>
-                </button>
+                <div class="d-flex justify-content-end w-100" id="editButton1Div">
+                    <button class="btn btn-lg w-50 btn-dark my-4 mt-3 me-3 rounded-5" onclick="editButton1OnClick()">
+                        <i class="bi bi-pencil"></i>
+                        <h7 class="fw-bold m-2 fs-5">Editar</h7>
+                    </button>
+                </div>
                 <div class="d-none flex-row align-items-center justify-content-center gap-5" id="editPageButtonsDiv">
                     <button class="btn btn-lg w-50 btn-danger my-4 mt-3 rounded-5" onclick="cancelButtonOnClick()">
                         <h7 class="fw-bold m-2 fs-5">Cancelar</h7>
@@ -159,7 +161,7 @@
                 <h2 class="text-center fw-bold">Direcciones</h2>
                 <p class="m-2 mt-0 fs-6">Administra tus direcciones para realizar las compras más rápidas y sencillas.
                 </p>
-                <button class="btn btn-lg w-75 btn-primary rounded-5">
+                <button class="btn btn-lg w-75 btn-dark rounded-5">
                     <i class="bi bi-pencil"></i>
                     <h7 class="fw-bold m-2 fs-5">Agregar una nueva dirección</h7>
                 </button>
