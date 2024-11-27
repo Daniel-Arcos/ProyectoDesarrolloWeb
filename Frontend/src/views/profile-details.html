@@ -120,27 +120,31 @@
                     <div class="row d-flex align-items-center justify-content-center">
                         <h5 class="col-5 fw-bold fs-6">Nombre completo: </h5>
                         <h5 class="col fs-6 profile-data" id="fullNameH5">Nombre 1</h5>
-                        <input type="text" class="col d-none form-control border bg-light profile-input" id="fullNameInput">
+                        <input type="text" class="col d-none form-control border bg-light profile-input"
+                            id="fullNameInput">
                     </div>
                     <div class="row d-flex align-items-center justify-content-center">
                         <h5 class="col-5 fw-bold fs-6">Número de teléfono: </h5>
                         <h5 class="col fs-6 profile-data" id="phoneNumberH5">Número de teléfono 1</h5>
-                        <input type="tel" class="col d-none form-control border bg-light profile-input" id="phoneNumberInput">
+                        <input type="tel" class="col d-none form-control border bg-light profile-input"
+                            id="phoneNumberInput">
                     </div>
                     <div class="row d-flex align-items-center justify-content-center">
                         <h5 class="col-5 fw-bold fs-6">Correo electrónico: </h5>
                         <h5 class="col fs-6 profile-data" id="emailH5">Correo electrónico 1</h5>
-                        <input type="email" class="col d-none form-control border bg-light profile-input" id="emailInput">
+                        <input type="email" class="col d-none form-control border bg-light profile-input"
+                            id="emailInput">
                     </div>
                     <div class="row d-flex align-items-center justify-content-center">
                         <h5 class="col-5 fw-bold fs-6">Fecha de nacimiento: </h5>
                         <h5 class="col fs-6 profile-data" id="birthDateH5">2025-12-31</h5>
-                        <input type="date" class="col d-none form-control border bg-light profile-input" id="birthDateInput">
+                        <input type="date" class="col d-none form-control border bg-light profile-input"
+                            id="birthDateInput">
                     </div>
                 </div>
                 <div class="d-flex justify-content-end w-100" id="editButton1Div">
                     <button class="btn btn-lg w-50 btn-dark my-4 mt-3 me-3 rounded-5" onclick="editButton1OnClick()">
-                        <i class="bi bi-pencil"></i>
+                        <i class="bi bi-pencil-fill"></i>
                         <h7 class="fw-bold m-2 fs-5">Editar</h7>
                     </button>
                 </div>
@@ -156,16 +160,76 @@
 
             <div class="col col-1 border-start my-3" style="margin-left: 4%; margin-right: 0.5%;"></div>
 
-            <div class="col my-3 d-flex flex-column align-items-center justify-content-center border border-gray"
+            <div class="col my-3 d-flex flex-column align-items-center justify-content-center border border-gray gap-3"
                 style="margin-left: -5%;" id="profileContentDiv">
-                <h2 class="text-center fw-bold">Direcciones</h2>
-                <p class="m-2 mt-0 fs-6">Administra tus direcciones para realizar las compras más rápidas y sencillas.
+                <h2 class="text-center fw-bold m-0">Direcciones</h2>
+                <p class="fs-6 m-0">Administra tus direcciones para realizar las compras más rápidas y sencillas.
                 </p>
-                <button class="btn btn-lg w-75 btn-dark rounded-5">
-                    <i class="bi bi-pencil"></i>
+                <button class="btn btn-lg w-75 m-0 btn-dark rounded-5">
+                    <i class="bi bi-pencil-fill"></i>
                     <h7 class="fw-bold m-2 fs-5">Agregar una nueva dirección</h7>
                 </button>
-                <hr>
+                <div class="d-flex flex-column align-items-center rounded-3 w-100 m-0 gap-3"
+                    style="height: 226px; padding: 15px; background-color: #E0E0E0; overflow-y: scroll; overflow-x: hidden;">
+                    <div class="bg-light w-100">
+                        <div class="d-flex flex-column m-2" style="height: 90%;">
+                            <div class="row d-flex align-items-center">
+                                <div class="col">
+                                    <h5>Álvaro Vázquez Aguirre</h5>
+                                </div>
+                                <div class="col d-flex flex-row align-items-center justify-content-end gap-2">
+                                    <button class="btn btn-md m-0 btn-dark rounded-5">
+                                        <i class="bi bi-info-circle-fill"></i>
+                                    </button>
+                                    <button class="btn btn-md m-0 btn-dark rounded-5">
+                                        <i class="bi bi-pencil-fill"></i>
+                                    </button>
+                                    <button class="btn btn-md m-0 btn-dark rounded-5">
+                                        <i class="bi bi-trash3-fill"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <h7>Av. Los Álamos</h7>
+                            <h7>Praderas</h7>
+                            <h7>91010</h7>
+                            <h7>Xalapa</h7>
+                            <hr class="my-2">
+                            <div class="d-flex flex-row align-items-center gap-2" style="margin: 0.5% 0px 0.5% 0px;">
+                                <input type="checkbox" style="width: 1.5rem; height: 1.5rem;">
+                                <h7>Usar como dirección predeterminada</h7>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-light w-100">
+                        <div class="d-flex flex-column m-2" style="height: 90%;">
+                            <div class="row d-flex align-items-center">
+                                <div class="col">
+                                    <h5>Álvaro Vázquez Aguirre</h5>
+                                </div>
+                                <div class="col d-flex flex-row align-items-center justify-content-end gap-2">
+                                    <button class="btn btn-md m-0 btn-dark rounded-5">
+                                        <i class="bi bi-info-circle-fill"></i>
+                                    </button>
+                                    <button class="btn btn-md m-0 btn-dark rounded-5">
+                                        <i class="bi bi-pencil-fill"></i>
+                                    </button>
+                                    <button class="btn btn-md m-0 btn-dark rounded-5">
+                                        <i class="bi bi-trash3-fill"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <h7>Av. Los Álamos</h7>
+                            <h7>Praderas</h7>
+                            <h7>91010</h7>
+                            <h7>Xalapa</h7>
+                            <hr class="my-2">
+                            <div class="d-flex flex-row align-items-center gap-2" style="margin: 0.5% 0px 0.5% 0px;">
+                                <input type="checkbox" style="width: 1.5rem; height: 1.5rem;">
+                                <h7>Usar como dirección predeterminada</h7>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
