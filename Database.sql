@@ -77,8 +77,7 @@ CREATE TABLE Product (
     Status VARCHAR(20),
     UnitPrice DECIMAL(10, 2) NOT NULL,
     Quantity INT NOT NULL,
-    Type VARCHAR(50),
-    Description TEXT,
+    Description VARCHAR(100),
     FOREIGN KEY (EmployeeID) REFERENCES Employee(ID),
     FOREIGN KEY (ProductTypeID) REFERENCES ProductType(ID)
 );
