@@ -22,4 +22,18 @@ public class ExceptionMessageConstants {
      */
     public static final String INTERNAL_SERVER_ERROR_MSG =     "An unexpected error occurred";
 
+    /**
+     * VENDEDOR
+     */
+    public static final String VENDEDOR_NOT_FOUND = "Vendedor no encontrado";
+
+    /**
+     * TIENDA
+     */
+    public static final String TIENDA_NOT_FOUND = "Tienda no encontrado";
+
+    /**
+     * PRODUCTOS
+     */
+    public static final String PRODUCTO_NOT_FOUND = "Producto no encontrado";
 }
