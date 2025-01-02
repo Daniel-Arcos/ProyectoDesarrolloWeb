@@ -36,4 +36,5 @@ public class ExceptionMessageConstants {
      * PRODUCTOS
      */
     public static final String PRODUCTO_NOT_FOUND = "Producto no encontrado";
+    public static final String CLIENTE_NOT_FOUND = "Cliente no encontrado";
 }

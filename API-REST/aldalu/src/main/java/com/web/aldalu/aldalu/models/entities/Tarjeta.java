@@ -31,6 +31,6 @@ public class Tarjeta {
 
     @ManyToOne
     @JoinColumn(name = "cliente_id", nullable = false)
-    @JsonBackReference
+    @JsonBackReference("cliente_tarjetas")
     private Cliente cliente;
 }

@@ -38,7 +38,7 @@ public class Pedido {
 
     @ManyToOne
     @JoinColumn(name = "cliente_id", nullable = false)
-    @JsonBackReference
+    @JsonBackReference("cliente_pedidos")
     private Cliente cliente;
 
     @OneToOne

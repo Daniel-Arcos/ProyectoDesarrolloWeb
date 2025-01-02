@@ -26,6 +26,7 @@ public class TiendaServiceImpl implements ITiendaService  {
     
     private final IVendedorRepository vendedorRepository;
     private final ITiendaRepository tiendaRepository;
+    
 
     @Transactional(readOnly = true)
     @Override
