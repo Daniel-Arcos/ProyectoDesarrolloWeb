@@ -5,20 +5,27 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.web.aldalu.aldalu.exceptions.dtos.NotFoundException;
+import com.web.aldalu.aldalu.models.dtos.TiendaDTO;
 import com.web.aldalu.aldalu.models.entities.Producto;
 import com.web.aldalu.aldalu.models.entities.Tienda;
+import com.web.aldalu.aldalu.models.entities.Vendedor;
 import com.web.aldalu.aldalu.repositories.ITiendaRepository;
+import com.web.aldalu.aldalu.repositories.IVendedorRepository;
 import com.web.aldalu.aldalu.services.ITiendaService;
+import com.web.aldalu.aldalu.utils.ExceptionMessageConstants;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class TiendaServiceImpl implements ITiendaService  {
-
-    @Autowired
-    ITiendaRepository tiendaRepository;
+    
+    private final IVendedorRepository vendedorRepository;
+    private final ITiendaRepository tiendaRepository;
 
     @Transactional(readOnly = true)
     @Override
@@ -28,13 +35,27 @@ public class TiendaServiceImpl implements ITiendaService  {
 
     @Transactional(readOnly = true)
     @Override
-    public Optional<Tienda> obtenerTiendaPorId(Long id) {
-        return tiendaRepository.findById(id);
+    public Tienda obtenerTiendaPorId(Long id) {
+        Tienda tienda = obtenerTiendaPorIdHeper(id);
+        return tienda;
     }
 
     @Override
-    public Tienda guardarTienda(Tienda tienda) {
-        return tiendaRepository.save(tienda);
+    public Tienda guardarTienda(TiendaDTO tiendaDTO) {
+        Vendedor vendedor = vendedorRepository.findById(tiendaDTO.getIdVendedor())
+            .orElseThrow(()-> new NotFoundException(ExceptionMessageConstants.VENDEDOR_NOT_FOUND));
+        Tienda tienda = new Tienda();
+        tienda.setNombreTienda(tiendaDTO.getNombreTienda());
+        tienda.setDescripcion(tiendaDTO.getDescripcion());
+        tienda.setProductos(new ArrayList<>());
+        tienda.setPedidos(new ArrayList<>());
+
+        vendedor.setTienda(tienda);
+
+        tiendaRepository.save(tienda);
+        vendedorRepository.save(vendedor);
+
+        return tienda;
     }
 
     @Override
@@ -49,12 +70,22 @@ public class TiendaServiceImpl implements ITiendaService  {
     @Transactional
     @Override
     public List<Producto> obtenerProductosPorTienda(Long tiendaId) {
-        Optional<Tienda> tiendaOptional = tiendaRepository.findById(tiendaId);
-        if(tiendaOptional.isPresent()) {
-            return tiendaOptional.get().getProductos();
-        } else {
-            return Collections.emptyList();
-        }
+        Tienda tienda = obtenerTiendaPorIdHeper(tiendaId)   ;
+        return tienda.getProductos();
+    }
+
+    private Tienda obtenerTiendaPorIdHeper (Long id) {
+        return tiendaRepository.findById(id)
+            .orElseThrow(() -> {
+                return new NotFoundException(ExceptionMessageConstants.TIENDA_NOT_FOUND);
+            });
+    }
+
+    private Tienda crearTiendaDesdePeticion(TiendaDTO request) {
+        return Tienda.builder()
+            .nombreTienda(request.getNombreTienda())
+            .descripcion(request.getDescripcion())
+            .build();       
     }
 
     

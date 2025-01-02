@@ -1,5 +1,7 @@
 package com.web.aldalu.aldalu.controllers;
 
+import java.io.IOException;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,6 +14,8 @@ import com.web.aldalu.aldalu.models.dtos.response.AuthenticationResponseDTO;
 import com.web.aldalu.aldalu.services.impl.AuthenticationServiceImpl;
 import com.web.aldalu.aldalu.utils.EndpointsConstants;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -33,5 +37,9 @@ public class AuthenticationController {
     return ResponseEntity.ok(response);
   }
 
+  @PostMapping("/refresh-token")
+  public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    service.refreshToken(request, response);
+  }
     
 }
