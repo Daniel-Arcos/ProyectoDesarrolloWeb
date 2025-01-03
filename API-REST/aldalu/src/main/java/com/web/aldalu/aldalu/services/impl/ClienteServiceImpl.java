@@ -68,7 +68,7 @@ public class ClienteServiceImpl implements IClienteService{
         tarjeta.setMesVencimiento(tarjetaDTO.getMesVencimiento());
         tarjeta.setAnoVencimiento(tarjetaDTO.getAnoVencimiento());
         tarjeta.setEmisorTarjeta(tarjetaDTO.getEmisorTarjeta());
-        tarjeta.setCodigoSeguridad(tarjeta.getCodigoSeguridad());
+        tarjeta.setCodigoSeguridad(tarjetaDTO.getCodigoSeguridad());
         tarjeta.setCliente(cliente);
         return convertTarjetaToRest(tarjetaRepository.save(tarjeta));
     }

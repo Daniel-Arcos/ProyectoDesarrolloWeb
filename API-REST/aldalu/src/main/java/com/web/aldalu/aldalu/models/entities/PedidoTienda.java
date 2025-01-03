@@ -1,5 +1,6 @@
 package com.web.aldalu.aldalu.models.entities;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -32,8 +33,7 @@ public class PedidoTienda {
 
     private EstadoPedidoTienda estado;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaCreacion;
+    private LocalDateTime fechaCreacion;
 
     private double subtotal;
 

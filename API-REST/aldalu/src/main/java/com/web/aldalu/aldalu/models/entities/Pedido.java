@@ -1,5 +1,6 @@
 package com.web.aldalu.aldalu.models.entities;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -30,8 +31,7 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY) 
     private Long id;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaCreacion;
+    private LocalDateTime fechaCreacion;
 
     private EstadoPedido estadoPedido;
     private Double total;
@@ -41,11 +41,11 @@ public class Pedido {
     @JsonBackReference("cliente_pedidos")
     private Cliente cliente;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "tarjeta_id", referencedColumnName = "id", nullable = false)
-    private Tarjeta tarjea;
+    private Tarjeta tarjeta;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "direccion_id", referencedColumnName = "id", nullable = false)
     private Direccion direccion;
 

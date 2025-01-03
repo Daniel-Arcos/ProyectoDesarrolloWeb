@@ -19,7 +19,7 @@ public class ProductoPedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int cantidad;
+    private float cantidad;
     private float precioUnitario;
 
     @ManyToOne

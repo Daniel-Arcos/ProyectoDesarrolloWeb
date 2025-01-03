@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductoRequestDTO {
+    private Long id;
     private String nombre;
     private Categoria categoria;
     private String descripcion;

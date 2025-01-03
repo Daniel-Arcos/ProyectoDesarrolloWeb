@@ -1,5 +1,7 @@
 package com.web.aldalu.aldalu.models.dtos;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import lombok.Data;
