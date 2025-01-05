@@ -27,14 +27,14 @@ public class Cliente extends Usuario {
     private LocalDate fechaNacimiento;
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @JsonManagedReference("cliente_direcciones")
     private List<Direccion> direcciones;
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @JsonManagedReference("cliente_tarjetas")
     private List<Tarjeta> tarjetas;
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @JsonManagedReference("cliente_pedidos")
     private List<Pedido> pedidos;
 }

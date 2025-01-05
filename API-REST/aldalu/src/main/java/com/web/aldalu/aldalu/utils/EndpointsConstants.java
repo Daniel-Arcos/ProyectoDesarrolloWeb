@@ -18,5 +18,6 @@ public class EndpointsConstants {
     public static final String ENDPOINT_PRODUCTOS_PATTERN = ENDPOINT_PRODUCTOS + "/**";
     public static final String ENDPOINT_TIENDAS = ENDPOINT_BASE_API + "/tiendas";
     public static final String ENDPOINT_TIENDAS_PATTERN = ENDPOINT_PRODUCTOS + "/**";
- 
+    public static final String ENDPOINT_PEDIDOS = ENDPOINT_BASE_API + "/pedidos";
+    public static final String ENDPOINT_PEDIDOS_PATTERN = ENDPOINT_PEDIDOS + "/**";
 }

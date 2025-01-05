@@ -43,6 +43,8 @@ public class SecurityFilterConfig {
                                 .requestMatchers(POST, EndpointsConstants.ENDPOINT_VENDEDORES_PATTERN).permitAll()
                                 .requestMatchers(PUT, EndpointsConstants.ENDPOINT_VENDEDORES_PATTERN).permitAll()
                                 .requestMatchers(DELETE, EndpointsConstants.ENDPOINT_VENDEDORES_PATTERN).permitAll()
+
+                                .requestMatchers(GET, EndpointsConstants.ENDPOINT_TIENDAS_PATTERN).authenticated()
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

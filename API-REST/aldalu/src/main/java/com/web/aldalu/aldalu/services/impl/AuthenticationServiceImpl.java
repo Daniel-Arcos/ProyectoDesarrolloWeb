@@ -3,12 +3,15 @@ package com.web.aldalu.aldalu.services.impl;
 import java.io.IOException;
 
 import org.springframework.boot.actuate.autoconfigure.metrics.MetricsProperties.Web.Client;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.web.aldalu.aldalu.models.dtos.UsuarioDTO;
 import com.web.aldalu.aldalu.models.dtos.request.AuthenticationRequestDTO;
 import com.web.aldalu.aldalu.models.dtos.request.RegisterRequestDTO;
 import com.web.aldalu.aldalu.models.dtos.response.AuthenticationResponseDTO;
@@ -17,12 +20,15 @@ import com.web.aldalu.aldalu.models.entities.EmpleadoAlmacen;
 import com.web.aldalu.aldalu.models.entities.Usuario;
 import com.web.aldalu.aldalu.models.entities.Vendedor;
 import com.web.aldalu.aldalu.models.enums.TipoUsuario;
+import com.web.aldalu.aldalu.repositories.IClienteRepository;
 import com.web.aldalu.aldalu.repositories.IUsuarioRepository;
 import com.web.aldalu.aldalu.repositories.IVendedorRepository;
 import com.web.aldalu.aldalu.security.services.JwtService;
 import com.web.aldalu.aldalu.services.IAuthenticationService;
+import com.web.aldalu.aldalu.utils.AuthConstants;
 import com.web.aldalu.aldalu.utils.enums.Role;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +38,7 @@ import lombok.RequiredArgsConstructor;
 public class AuthenticationServiceImpl implements IAuthenticationService {
 
     private final IVendedorRepository vendedorRepository;
+    private final IClienteRepository clienteRepository;
     private final IUsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
@@ -39,18 +46,29 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
 
     @Override
     public AuthenticationResponseDTO register(RegisterRequestDTO request) {
-        String jwtToken = "";
-        String jwtRefreshToken = "";
-        if(request.getTipoUsuario() == TipoUsuario.CLIENTE) {
-            Cliente usuario = crearClienteDesdePeticion(request);
-            ///guardar
-        } else if (request.getTipoUsuario() == TipoUsuario.VENDEDOR) {
-            Vendedor usuario = crearVendedorDesdePeticion(request);
-            vendedorRepository.save(usuario);
-            jwtToken = jwtService.generateToken(usuario);
-            jwtRefreshToken = jwtService.generateRefreshToken(usuario);
+        Usuario usuario = crearUsuarioDesdePeticion(request);
+        guardarUsuario(usuario);
+        
+        String jwtToken = jwtService.generateToken(usuario);
+        String jwtRefreshToken = jwtService.generateRefreshToken(usuario);
+        
+        return construirAuthResponse(jwtToken, jwtRefreshToken, usuario);
+    }
+
+    private Usuario crearUsuarioDesdePeticion(RegisterRequestDTO request) {
+        return switch (request.getTipoUsuario()) {
+            case CLIENTE -> crearClienteDesdePeticion(request);
+            case VENDEDOR -> crearVendedorDesdePeticion(request);
+            default -> throw new IllegalArgumentException("Tipo de usuario no soportado");
+        };
+    }
+
+    private void guardarUsuario(Usuario usuario) {
+        if (usuario instanceof Cliente) {
+            clienteRepository.save((Cliente) usuario);
+        } else if (usuario instanceof Vendedor) {
+            vendedorRepository.save((Vendedor) usuario);
         }
-        return construirAuthResponse(jwtToken, jwtRefreshToken);
     }
 
     @Override
@@ -60,7 +78,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         authenticateUser(request.getEmail(), request.getPassword());
         String jwtToken = jwtService.generateToken(usuario);
         String refreshToken = jwtService.generateRefreshToken(usuario);
-        return construirAuthResponse(jwtToken, refreshToken);
+        return construirAuthResponse(jwtToken, refreshToken, usuario);
         
     }
 
@@ -72,8 +90,38 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
 
     @Override
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'refreshToken'");
+        String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+        if(isInvalidAuthHeader(authHeader)) {
+            return;
+        }
+
+        String refreshToken = extractToken(authHeader);
+        String userEmail = jwtService.extractUsername(refreshToken);
+
+        if (userEmail!= null){
+            processRefreshToken(response, refreshToken, userEmail);
+        }
+    }
+
+    private boolean isInvalidAuthHeader(String authHeader) {
+        return authHeader == null || !authHeader.startsWith(AuthConstants.BEARER_PREFIX);
+    }
+
+    private String extractToken(String authHeader) {
+        return authHeader.substring(AuthConstants.BEARER_PREFIX.length());
+    }
+
+    private void processRefreshToken(HttpServletResponse response, String refreshToken, String userEmail) throws IOException {
+        Usuario user = usuarioRepository.findByEmail(userEmail).orElseThrow();
+        if (jwtService.isTokenValid(refreshToken, user)) {
+          String accessToken = jwtService.generateToken(user);
+          writeAuthResponse(response, construirAuthResponse(accessToken, refreshToken, user));
+        }
+    }
+
+    private void writeAuthResponse(HttpServletResponse response, AuthenticationResponseDTO authResponse) throws IOException {
+        response.setContentType(AuthConstants.CONTENT_TYPE_JSON);
+        new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
     }
 
     private Cliente crearClienteDesdePeticion(RegisterRequestDTO request) {
@@ -100,10 +148,30 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
             .build();       
     }
 
-    private AuthenticationResponseDTO construirAuthResponse(String jwtToken, String refreshToken) {
+    private AuthenticationResponseDTO construirAuthResponse(String jwtToken, String refreshToken, Usuario usuario) {
         return AuthenticationResponseDTO.builder()
-            .accessToken(jwtToken)
-            .refreshToken(refreshToken)
+        .accessToken(jwtToken)
+        .refreshToken(refreshToken)
+        .usuario(construirUsuarioDTO(usuario))
+        .build();
+    }
+
+    private UsuarioDTO construirUsuarioDTO(Usuario usuario) {
+        String nombre = switch (usuario.getTipoUsuario()) {
+            case CLIENTE -> clienteRepository.findById(usuario.getId())
+                .map(Cliente::getNombre)
+                .orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado"));
+            case VENDEDOR -> vendedorRepository.findById(usuario.getId())
+                .map(Vendedor::getNombreVendedor)
+                .orElseThrow(() -> new EntityNotFoundException("Vendedor no encontrado"));
+            default -> throw new IllegalArgumentException("Tipo de usuario no soportado");
+        };
+
+        return UsuarioDTO.builder()
+            .id(usuario.getId())
+            .email(usuario.getEmail())
+            .tipoUsuario(usuario.getTipoUsuario())
+            .nombre(nombre)
             .build();
     }
     
