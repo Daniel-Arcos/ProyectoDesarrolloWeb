@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Alvaro Vazquez Aguirre">
+  <meta name="author" content="Daniel Garcia Arcos">
+  <meta name="author" content="Luis Alonso Andrade Lopez">
+  <meta >
+  <title>Órdenes</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+
+  <link rel="stylesheet" type="text/css" href="/Frontend/src/styles/vendor.css">
+  <link rel="stylesheet" type="text/css" href="/Frontend/src/styles/home.style.css">
+    <link rel="stylesheet" type="text/css" href="/Frontend/src/styles/orders.css">
+
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <defs>
+            <symbol xmlns="http://www.w3.org/2000/svg" id="link" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M12 19a1 1 0 1 0-1-1a1 1 0 0 0 1 1Zm5 0a1 1 0 1 0-1-1a1 1 0 0 0 1 1Zm0-4a1 1 0 1 0-1-1a1 1 0 0 0 1 1Zm-5 0a1 1 0 1 0-1-1a1 1 0 0 0 1 1Zm7-12h-1V2a1 1 0 0 0-2 0v1H8V2a1 1 0 0 0-2 0v1H5a3 3 0 0 0-3 3v14a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V6a3 3 0 0 0-3-3Zm1 17a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-9h16Zm0-11H4V6a1 1 0 0 1 1-1h1v1a1 1 0 0 0 2 0V5h8v1a1 1 0 0 0 2 0V5h1a1 1 0 0 1 1 1ZM7 15a1 1 0 1 0-1-1a1 1 0 0 0 1 1Zm0 4a1 1 0 1 0-1-1a1 1 0 0 0 1 1Z"/>
+            </symbol>
+            <symbol xmlns="http://www.w3.org/2000/svg" id="arrow-right" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M17.92 11.62a1 1 0 0 0-.21-.33l-5-5a1 1 0 0 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1 1 0 0 0 0 1.42a1 1 0 0 0 1.42 0l5-5a1 1 0 0 0 .21-.33a1 1 0 0 0 0-.76Z"/>
+            </symbol>
+            <symbol xmlns="http://www.w3.org/2000/svg" id="category" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M19 5.5h-6.28l-.32-1a3 3 0 0 0-2.84-2H5a3 3 0 0 0-3 3v13a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-10a3 3 0 0 0-3-3Zm1 13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-13a1 1 0 0 1 1-1h4.56a1 1 0 0 1 .95.68l.54 1.64a1 1 0 0 0 .95.68h7a1 1 0 0 1 1 1Z"/>
+            </symbol>
+            <symbol xmlns="http://www.w3.org/2000/svg" id="calendar" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M19 4h-2V3a1 1 0 0 0-2 0v1H9V3a1 1 0 0 0-2 0v1H5a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3Zm1 15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-7h16Zm0-9H4V7a1 1 0 0 1 1-1h2v1a1 1 0 0 0 2 0V6h6v1a1 1 0 0 0 2 0V6h2a1 1 0 0 1 1 1Z"/>
+            </symbol>
+            <symbol xmlns="http://www.w3.org/2000/svg" id="heart" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M20.16 4.61A6.27 6.27 0 0 0 12 4a6.27 6.27 0 0 0-8.16 9.48l7.45 7.45a1 1 0 0 0 1.42 0l7.45-7.45a6.27 6.27 0 0 0 0-8.87Zm-1.41 7.46L12 18.81l-6.75-6.74a4.28 4.28 0 0 1 3-7.3a4.25 4.25 0 0 1 3 1.25a1 1 0 0 0 1.42 0a4.27 4.27 0 0 1 6 6.05Z"/>
+            </symbol>
+            <symbol xmlns="http://www.w3.org/2000/svg" id="plus" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M19 11h-6V5a1 1 0 0 0-2 0v6H5a1 1 0 0 0 0 2h6v6a1 1 0 0 0 2 0v-6h6a1 1 0 0 0 0-2Z"/>
+            </symbol>
+            <symbol xmlns="http://www.w3.org/2000/svg" id="minus" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M19 11H5a1 1 0 0 0 0 2h14a1 1 0 0 0 0-2Z"/>
+            </symbol>
+            <symbol xmlns="http://www.w3.org/2000/svg" id="cart" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M8.5 19a1.5 1.5 0 1 0 1.5 1.5A1.5 1.5 0 0 0 8.5 19ZM19 16H7a1 1 0 0 1 0-2h8.491a3.013 3.013 0 0 0 2.885-2.176l1.585-5.55A1 1 0 0 0 19 5H6.74a3.007 3.007 0 0 0-2.82-2H3a1 1 0 0 0 0 2h.921a1.005 1.005 0 0 1 .962.725l.155.545v.005l1.641 5.742A3 3 0 0 0 7 18h12a1 1 0 0 0 0-2Zm-1.326-9l-1.22 4.274a1.005 1.005 0 0 1-.963.726H8.754l-.255-.892L7.326 7ZM16.5 19a1.5 1.5 0 1 0 1.5 1.5a1.5 1.5 0 0 0-1.5-1.5Z"/>
+            </symbol>
+            <symbol xmlns="http://www.w3.org/2000/svg" id="check" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M18.71 7.21a1 1 0 0 0-1.42 0l-7.45 7.46l-3.13-3.14A1 1 0 1 0 5.29 13l3.84 3.84a1 1 0 0 0 1.42 0l8.16-8.16a1 1 0 0 0 0-1.47Z"/>
+            </symbol>
+            <symbol xmlns="http://www.w3.org/2000/svg" id="trash" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M10 18a1 1 0 0 0 1-1v-6a1 1 0 0 0-2 0v6a1 1 0 0 0 1 1ZM20 6h-4V5a3 3 0 0 0-3-3h-2a3 3 0 0 0-3 3v1H4a1 1 0 0 0 0 2h1v11a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V8h1a1 1 0 0 0 0-2ZM10 5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1h-4Zm7 14a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V8h10Zm-3-1a1 1 0 0 0 1-1v-6a1 1 0 0 0-2 0v6a1 1 0 0 0 1 1Z"/>
+            </symbol>
+            <symbol xmlns="http://www.w3.org/2000/svg" id="star-outline" viewBox="0 0 15 15">
+            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M7.5 9.804L5.337 11l.413-2.533L4 6.674l2.418-.37L7.5 4l1.082 2.304l2.418.37l-1.75 1.793L9.663 11L7.5 9.804Z"/>
+            </symbol>
+            <symbol xmlns="http://www.w3.org/2000/svg" id="star-solid" viewBox="0 0 15 15">
+            <path fill="currentColor" d="M7.953 3.788a.5.5 0 0 0-.906 0L6.08 5.85l-2.154.33a.5.5 0 0 0-.283.843l1.574 1.613l-.373 2.284a.5.5 0 0 0 .736.518l1.92-1.063l1.921 1.063a.5.5 0 0 0 .736-.519l-.373-2.283l1.574-1.613a.5.5 0 0 0-.283-.844L8.921 5.85l-.968-2.062Z"/>
+            </symbol>
+            <symbol xmlns="http://www.w3.org/2000/svg" id="search" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z"/>
+            </symbol>
+            <symbol xmlns="http://www.w3.org/2000/svg" id="user" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M15.71 12.71a6 6 0 1 0-7.42 0a10 10 0 0 0-6.22 8.18a1 1 0 0 0 2 .22a8 8 0 0 1 15.9 0a1 1 0 0 0 1 .89h.11a1 1 0 0 0 .88-1.1a10 10 0 0 0-6.25-8.19ZM12 12a4 4 0 1 1 4-4a4 4 0 0 1-4 4Z"/>
+            </symbol>
+            <symbol xmlns="http://www.w3.org/2000/svg" id="close" viewBox="0 0 15 15">
+            <path fill="currentColor" d="M7.953 3.788a.5.5 0 0 0-.906 0L6.08 5.85l-2.154.33a.5.5 0 0 0-.283.843l1.574 1.613l-.373 2.284a.5.5 0 0 0 .736.518l1.92-1.063l1.921 1.063a.5.5 0 0 0 .736-.519l-.373-2.283l1.574-1.613a.5.5 0 0 0-.283-.844L8.921 5.85l-.968-2.062Z"/>
+            </symbol>
+        </defs>
+    </svg>
+        
+    <header>
+        <div class="container-fluid">
+          <div class="row py-4 border-bottom">
+            
+            <div class="col-6 text-start">
+              <div class="main-logo">
+                <a href="home.html">
+                  <img src="/Frontend/src/assets/images/logo.jpg" alt="logo" class="img-fluid" style="max-height: 70px">
+                </a>
+              </div>
+            </div>
+      
+            <!-- Por si decido añadirle algo al header
+            <div class="col-4 d-flex align-items-center justify-content-center">
+              <h2 class="mb-0">Agregar producto</h2>
+            </div> -->
+      
+            
+            <div class="col-6 d-flex justify-content-end align-items-center">
+              <a href="#" class="rounded-circle bg-light p-2">
+                <svg width="24" height="24" viewBox="0 0 24 24">
+                  <use xlink:href="#user"></use>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+    </header>
+
+
+    <div class="preloader-wrapper">
+        <div class="preloader">
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content-wrapper">
+            <h2 class="mb-4">Gestión de Pedidos</h2>
+
+            <div class="search-section">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label for="searchOrder" class="form-label">Buscar Pedido</label>
+                        <input type="text" class="form-control" id="searchOrder" 
+                               placeholder="Número de pedido o cliente...">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="statusFilter" class="form-label">Estado del Pedido</label>
+                        <select class="form-select" id="statusFilter">
+                            <option value="">Todos los estados</option>
+                            <option value="pending">Pendiente</option>
+                            <option value="processing">En proceso</option>
+                            <option value="shipped">Enviado</option>
+                            <option value="delivered">Entregado</option>
+                            <option value="cancelled">Cancelado</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="paymentFilter" class="form-label">Estado de Pago</label>
+                        <select class="form-select" id="paymentFilter">
+                            <option value="">Todos</option>
+                            <option value="paid">Pagado</option>
+                            <option value="pending">Pendiente</option>
+                            <option value="refunded">Reembolsado</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <div class="card bg-primary text-white">
+                        <div class="card-body">
+                            <h6 class="card-title">Total Pedidos</h6>
+                            <h3 class="card-text" id="totalOrders">0</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card bg-warning">
+                        <div class="card-body">
+                            <h6 class="card-title">Pedidos Pendientes</h6>
+                            <h3 class="card-text" id="pendingOrders">0</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card bg-success text-white">
+                        <div class="card-body">
+                            <h6 class="card-title">Pedidos Completados</h6>
+                            <h3 class="card-text" id="completedOrders">0</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Número</th>
+                            <th>Fecha</th>
+                            <th>Cliente</th>
+                            <th>Estado</th>
+                            <th>Pago</th>
+                            <th>Total</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ordersTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para actualizar estado -->
+    <div class="modal fade" id="updateOrderModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Actualizar Estado del Pedido</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="updateOrderForm">
+                        <input type="hidden" id="updateOrderId">
+                        <div class="mb-3">
+                            <label class="form-label">Número de Pedido</label>
+                            <input type="text" class="form-control" id="orderNumber" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Estado Actual</label>
+                            <input type="text" class="form-control" id="currentStatus" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Nuevo Estado</label>
+                            <select class="form-select" id="newStatus" required>
+                                <option value="">Seleccione un estado...</option>
+                                <option value="pending">Pendiente</option>
+                                <option value="processing">En proceso</option>
+                                <option value="shipped">Enviado</option>
+                                <option value="delivered">Entregado</option>
+                                <option value="cancelled">Cancelado</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="saveOrderUpdate">Guardar Cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    // [El JavaScript se mantiene igual que en la versión anterior]
+    document.addEventListener('DOMContentLoaded', function() {
+        const mockOrders = [
+            {
+                id: 1,
+                number: "PED001",
+                date: "2024-01-05",
+                customer: "Juan Pérez",
+                status: "pending",
+                paymentStatus: "paid",
+                total: 899.99
+            },
+            {
+                id: 2,
+                number: "PED002",
+                date: "2024-01-05",
+                customer: "María García",
+                status: "processing",
+                paymentStatus: "pending",
+                total: 299.99
+            },
+            {
+                id: 3,
+                number: "PED003",
+                date: "2024-01-04",
+                customer: "Carlos López",
+                status: "delivered",
+                paymentStatus: "paid",
+                total: 499.99
+            },
+            {
+                id: 4,
+                number: "PED004",
+                date: "2024-01-04",
+                customer: "Ana Rodríguez",
+                status: "shipped",
+                paymentStatus: "refunded",
+                total: 199.99
+            },
+            {
+                id: 5,
+                number: "PED005",
+                date: "2024-01-04",
+                customer: "Luis Hernández",
+                status: "cancelled",
+                paymentStatus: "refunded",
+                total: 599.99
+            }
+        ];
+
+        let filteredOrders = [...mockOrders];
+        const updateOrderModal = new bootstrap.Modal(document.getElementById('updateOrderModal'));
+
+        function getStatusClass(status) {
+            const classes = {
+            'pending': 'status-pending',      
+            'processing': 'status-processing', 
+            'shipped': 'status-shipped',     
+            'delivered': 'status-delivered',  
+            'cancelled': 'status-cancelled'  
+        };
+        return classes[status] || 'status-unknown'; 
+        }
+
+        function getPaymentStatusClass(status) {
+            const classes = {
+                'paid': 'bg-success',
+                'pending': 'status-pending',
+                'refunded': 'status-cancelled'
+            };
+            return classes[status] || 'bg-secondary';
+        }
+
+        function updateTable() {
+            const tableBody = document.getElementById('ordersTableBody');
+            tableBody.innerHTML = '';
+
+            filteredOrders.forEach(order => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${order.number}</td>
+                    <td>${order.date}</td>
+                    <td>${order.customer}</td>
+                    <td>
+                        <span class="badge ${getStatusClass(order.status)}">
+                            ${capitalizeFirstLetter(order.status)}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="badge ${getPaymentStatusClass(order.paymentStatus)}">
+                            ${capitalizeFirstLetter(order.paymentStatus)}
+                        </span>
+                    </td>
+                    <td>$${order.total.toFixed(2)}</td>
+                    <td>
+                        <button class="btn btn-sm btn-primary" onclick="openOrderUpdate(${order.id})">
+                            Actualizar
+                        </button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+
+            updateSummaryCards();
+        }
+
+        function updateSummaryCards() {
+            document.getElementById('totalOrders').textContent = filteredOrders.length;
+            document.getElementById('pendingOrders').textContent = 
+                filteredOrders.filter(order => order.status === 'pending').length;
+            document.getElementById('completedOrders').textContent = 
+                filteredOrders.filter(order => order.status === 'delivered').length;
+        }
+
+        function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+
+        document.getElementById('searchOrder').addEventListener('input', filterOrders);
+        document.getElementById('statusFilter').addEventListener('change', filterOrders);
+        document.getElementById('paymentFilter').addEventListener('change', filterOrders);
+
+        function filterOrders() {
+            const searchTerm = document.getElementById('searchOrder').value.toLowerCase();
+            const statusFilter = document.getElementById('statusFilter').value;
+            const paymentFilter = document.getElementById('paymentFilter').value;
+
+            filteredOrders = mockOrders.filter(order => {
+                const matchesSearch = order.number.toLowerCase().includes(searchTerm) || 
+                                   order.customer.toLowerCase().includes(searchTerm);
+                const matchesStatus = !statusFilter || order.status === statusFilter;
+                const matchesPayment = !paymentFilter || order.paymentStatus === paymentFilter;
+                return matchesSearch && matchesStatus && matchesPayment;
+            });
+
+            updateTable();
+        }
+
+        window.openOrderUpdate = function(orderId) {
+            const order = mockOrders.find(item => item.id === orderId);
+            if (order) {
+                document.getElementById('updateOrderId').value = order.id;
+                document.getElementById('orderNumber').value = order.number;
+                document.getElementById('currentStatus').value = capitalizeFirstLetter(order.status);
+                document.getElementById('newStatus').value = '';
+                updateOrderModal.show();
+            }
+        }
+
+        document.getElementById('saveOrderUpdate').addEventListener('click', function() {
+            const form = document.getElementById('updateOrderForm');
+            if (form.checkValidity()) {
+                const orderId = parseInt(document.getElementById('updateOrderId').value);
+                const newStatus = document.getElementById('newStatus').value;
+
+                const order = mockOrders.find(item => item.id === orderId);
+                if (order) {
+                    order.status = newStatus;
+                    updateTable();
+                    updateOrderModal.hide();
+                }
+            } else {
+                form.classList.add('was-validated');
+            }
+        });
+
+        updateTable();
+    });
+    </script>
+
+    <script src="/src/js/jquery-1.11.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <script src="/src/js/plugins.js"></script>
+    <script src="/src/js/script.js"></script>
+
+</body>
+
+</html>
