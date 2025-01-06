@@ -49,11 +49,11 @@ function mostrarProductos(tienda) {
                         </div>
                         <div class="product-actions">
                             <div class="d-flex justify-content-end">
-                                <button class="btn btn-outline-dark fw-semibold mx-2" onclick="editarProducto(${JSON.stringify(producto).replace(/"/g, '&quot;')})">
+                                <button class="btn btn-outline-dark fw-semibold mx-2 edit-button" data-producto='${JSON.stringify(producto)}'>
                                     <i class="bi bi-pencil m-2"></i>
                                     Editar
                                 </button>
-                                <button class="btn btn-outline-dark fw-semibold" onclick="eliminarProducto(${producto.id})">
+                                <button class="btn btn-outline-dark fw-semibold delete-button" data-id="${producto.id}">
                                     <i class="bi bi-trash"></i>
                                     Eliminar
                                 </button>
@@ -65,9 +65,27 @@ function mostrarProductos(tienda) {
         `;
         productosContainer.innerHTML += productoHTML;
     });
+
+    document.querySelectorAll('.edit-button').forEach(button => {
+        button.addEventListener('click', function() {
+            const producto = JSON.parse(this.dataset.producto);
+            editarProducto(producto);
+        });
+    });
+
+    document.querySelectorAll('.delete-button').forEach(button => {
+        button.addEventListener('click', function() {
+            const id = this.dataset.id;
+            eliminarProducto(id);
+        });
+    });
 }
 
 function editarProducto(producto) {
     sessionStorage.setItem('productoEditar', JSON.stringify(producto));
-    //window.location.href = '/modify-product';
+    window.location.href = '../vendedor/modify-product.html';
+}
+
+function eliminarProducto(id) {
+
 }

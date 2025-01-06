@@ -21,10 +21,14 @@ function mostrarProductos(productos) {
         const productoDiv = document.createElement('div');
         productoDiv.className = 'col';
         
+        const imageSrc = producto.imageData ? 
+        `data:image/jpeg;base64,${producto.imageData}` : 
+        '../../assets/images/defecto.jpg';
+
         productoDiv.innerHTML = `
             <div class="card border-0 h-100">
                 <div class="product-card-img-container">
-                    <img src="${producto.imagen}" class="card-img-top" alt="${producto.nombre}">
+                    <img src="${imageSrc}" class="card-img-top" alt="${producto.nombre}">
                 </div>
                 <div class="card-body px-0">
                     <div class="d-flex justify-content-between align-items-start mb-2">

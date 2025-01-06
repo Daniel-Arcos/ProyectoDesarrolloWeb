@@ -18,7 +18,6 @@ const obtenerProductos = async () => {
 const guardarProducto = async (datosProducto) => {
     try {
         const token = Cookies.get('Token');
-        console.log("Token", token)
         const response = await axios.post(baseUrl, datosProducto, {
             headers: {
                 'Authorization': `Bearer ${token}` 
@@ -31,4 +30,20 @@ const guardarProducto = async (datosProducto) => {
     }
 }
 
-export { obtenerProductos, guardarProducto };
+const actualizarProducto = async (datosProducto) => {
+    try {
+        const token = Cookies.get('Token');
+        const response = await axios.put(`${baseUrl}/${datosProducto.id}`, datosProducto, {
+            headers: {
+                'Authorization': `Bearer ${token}` 
+            }
+        })
+        console.log("Producto actualizado", response)
+        return response.data;
+    } catch (error) {
+        console.error('Error al hacer la petición', error);
+        throw error;
+    }
+}
+
+export { obtenerProductos, guardarProducto, actualizarProducto };

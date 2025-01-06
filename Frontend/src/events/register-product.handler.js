@@ -23,7 +23,6 @@ document.addEventListener('DOMContentLoaded', function () {
             tiendaId: tiendaId,
         };
 
-        // Convertir la imagen a Base64
         const imageFile = document.getElementById('productImage').files[0];
         if (imageFile) {
             const base64Image = await convertImageToBase64(imageFile);
