@@ -8,6 +8,12 @@ const obtenerTiendaVendedor = async (idVendedor) => {
                 'Authorization': `Bearer ${token}` 
             }
         })
+        console.log(response)
+        Cookies.set('tiendaData', JSON.stringify({
+            id: response.data.id,
+            nombreTienda: response.data.nombreTienda,
+            descripcion: response.data.descripcion,
+        }));
         return response.data;
     } catch (error) {
         throw error;
