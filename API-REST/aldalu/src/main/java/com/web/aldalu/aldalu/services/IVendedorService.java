@@ -3,9 +3,8 @@ package com.web.aldalu.aldalu.services;
 import java.util.List;
 import java.util.Optional;
 
+import com.web.aldalu.aldalu.models.dtos.TiendaDTO;
 import com.web.aldalu.aldalu.models.dtos.VendedorDTO;
-import com.web.aldalu.aldalu.models.entities.Tienda;
-
 import lombok.NonNull;
 
 public interface IVendedorService {
@@ -14,5 +13,5 @@ public interface IVendedorService {
     VendedorDTO guardarVendedor(VendedorDTO vendedor);
     Optional<VendedorDTO> eliminarVendedor(@NonNull Long vendedorId);
     Optional<VendedorDTO> actualizarVendedor(@NonNull final Long vendedorId, @NonNull final VendedorDTO vendedorDTO);
-    Tienda obtenerTiendaVendedor(Long id);
+    TiendaDTO obtenerTiendaVendedor(Long id);
 }

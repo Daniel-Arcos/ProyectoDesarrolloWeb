@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.web.aldalu.aldalu.exceptions.dtos.NotFoundException;
+import com.web.aldalu.aldalu.models.dtos.TiendaDTO;
 import com.web.aldalu.aldalu.models.dtos.VendedorDTO;
 import com.web.aldalu.aldalu.models.entities.Tienda;
 import com.web.aldalu.aldalu.models.entities.Vendedor;
@@ -78,10 +79,16 @@ public class VendedorServiceImpl implements IVendedorService {
         return mapper.map(vendedorDTO, Vendedor.class);
     }
 
+    private TiendaDTO convertTiendaToDTO(Tienda tienda) {
+        return mapper.map(tienda, TiendaDTO.class);
+    }
+
     @Override
-    public Tienda obtenerTiendaVendedor(Long id) {
+    public TiendaDTO obtenerTiendaVendedor(Long id) {
         Vendedor vendedor = obtenerVendedorPorIdHelper(id);
-        return vendedor.getTienda();
+        TiendaDTO tienda = convertTiendaToDTO(vendedor.getTienda());
+        tienda.setIdVendedor(id);
+        return tienda;
     }
 
     private Vendedor obtenerVendedorPorIdHelper (Long id) {
