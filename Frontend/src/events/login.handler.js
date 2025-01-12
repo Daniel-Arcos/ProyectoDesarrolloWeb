@@ -1,4 +1,5 @@
 import { login } from '../services/AuthenticationService.js'; 
+import {obtenerEmpleadoPorId} from '../services/EmpleadoService.js'
 
 const form = document.getElementById('loginForm')
 
@@ -29,6 +30,18 @@ form.addEventListener('submit', async (event) => {
                 window.location.href = '../views/cliente/dashboard.html';
             } else if (data.usuario.tipoUsuario === 'VENDEDOR') {
                 window.location.href = '../views/vendedor/dashboard.html';
+            } else if (data.usuario.tipoUsuario === 'EMPLEADO_ALMACEN') {
+                try {
+                    const empleadoData = await obtenerEmpleadoPorId(data.usuario.id)
+                    if (empleadoData.rolEmpleado === 'ADMINISTRADOR') {
+                        window.location.href = '../views/administrador/orders.html';
+                    } else if (empleadoData.rolEmpleado === 'REPARTIDOR') {
+                        window.location.href = '../views/repartidor/dashboard.html';
+                    }
+                } catch (error) {
+                    console.log("error", error)
+                    alert("Ocurrio un error al iniciar sesion.")
+                }
             }
         } catch (error) {
             console.log("error", error);

@@ -1,14 +1,21 @@
 import { obtenerTiendaVendedor } from '../services/VendedorService.js'; // Importamos la función de peticiones
-
+import { obtenerProductosTienda } from '../services/TiendaService.js'
+import { eliminarProducto } from '../services/ProductoService.js'
+import {cerrarSesion} from '../services/AuthenticationService.js'
+const salirButton = document.getElementById('logout');
+salirButton.onclick = () => cerrarSesion();
 const agregarProductoButton = document.getElementById("agregarProducto")
 
 document.addEventListener('DOMContentLoaded', async function() {
     try {
         const userData = JSON.parse(Cookies.get('userData'));
+        if (userData && userData.nombre) {
+            document.getElementById('user-name').textContent = userData.nombre;
+        }
         const vendedorId = userData.id;
         const tienda = await obtenerTiendaVendedor(vendedorId);
-        console.log('TIenda:', tienda);
-        mostrarProductos(tienda);
+        const productos = await obtenerProductosTienda(tienda.id);
+        mostrarProductos(productos);
     } catch (error) {
         console.error('Error al obtener productos:', error);
     }
@@ -18,10 +25,8 @@ agregarProductoButton.onclick = () => {
     window.location.href = '../vendedor/register-product.html';
 };
 
-function mostrarProductos(tienda) {
+function mostrarProductos(productos) {
     const productosContainer = document.querySelector('.row');
-    const productos = tienda.productos;
-    
     productosContainer.innerHTML = '';
 
     productos.forEach(producto => {
@@ -76,7 +81,7 @@ function mostrarProductos(tienda) {
     document.querySelectorAll('.delete-button').forEach(button => {
         button.addEventListener('click', function() {
             const id = this.dataset.id;
-            eliminarProducto(id);
+            eliminarProductoFuncion(id);
         });
     });
 }
@@ -86,6 +91,18 @@ function editarProducto(producto) {
     window.location.href = '../vendedor/modify-product.html';
 }
 
-function eliminarProducto(id) {
-
+async function eliminarProductoFuncion (id) {
+    if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
+        try {
+            await eliminarProducto(id);
+            const userData = JSON.parse(Cookies.get('userData'));
+            const vendedorId = userData.id;
+            const tienda = await obtenerTiendaVendedor(vendedorId);
+            const productos = await obtenerProductosTienda(tienda.id);
+            mostrarProductos(productos);
+        } catch (error) {
+            console.error('Error al eliminar el producto:', error);
+            alert('Hubo un error al eliminar el producto');
+        }
+    }
 }

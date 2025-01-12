@@ -1,53 +1,69 @@
-const profileInputs = document.getElementsByClassName('profile-input');
-const profileDataElements = document.getElementsByClassName('profile-data');
+import { actualizarCliente } from "../services/ClienteService.js";
 
-const fullNameH5 = document.getElementById('fullNameH5');
-const phoneNumberH5 = document.getElementById('phoneNumberH5');
-const emailH5 = document.getElementById('emailH5');
-const birthDateH5 = document.getElementById('birthDateH5');
-
-const fullNameInput = document.getElementById('fullNameInput');
-const phoneNumberInput = document.getElementById('phoneNumberInput');
-const emailInput = document.getElementById('emailInput');
-const birthDateInput = document.getElementById('birthDateInput');
-
-const editButton1 = document.getElementById('editButton1');
-const editPageButtonsDiv = document.getElementById('editPageButtonsDiv');
-
-document.addEventListener('DOMContentLoaded', () => {
-    fullNameInput.value = fullNameH5.textContent;
-    phoneNumberInput.value = phoneNumberH5.textContent;
-    emailInput.value = emailH5.textContent;
-    birthDateInput.value = birthDateH5.textContent;
+document.addEventListener("DOMContentLoaded", () => {
+  try {
+    const userData = JSON.parse(Cookies.get("userData"));
+    cargarDatosUsuario(userData);
+  } catch (error) {
+    console.error("Error al cargar los datos del usuario:", error);
+  }
 });
 
-function editButton1OnClick() {
-    for (const data of profileDataElements) {
-        data.classList.add('d-none');
+document
+  .querySelector("#editPersonalInfoModal .btn-dark")
+  .addEventListener("click", async function () {
+    const name = document.getElementById("name").value;
+    const phone = document.getElementById("phone").value;
+    const birthDate = document.getElementById("birthDate").value;
+
+    await actualizarCliente({
+      id: JSON.parse(Cookies.get("userData")).id,
+      nombre: name,
+      telefonoCelular: phone,
+      fechaNacimiento: birthDate,
+    });
+    const userData = JSON.parse(Cookies.get("userData"));
+    cargarDatosUsuario(userData);
+    const modal = bootstrap.Modal.getInstance(
+      document.getElementById("editPersonalInfoModal")
+    );
+    modal.hide();
+  });
+
+function cargarDatosUsuario(userData) {
+  if (userData) {
+    const userNameElement = document.getElementById("user-name");
+    if (userNameElement) {
+      userNameElement.textContent = userData.nombre;
     }
 
-    for (const input of profileInputs) {
-        input.classList.remove('d-none');
+    const personalInfoElements = document.querySelectorAll(".personal-info");
+    if (personalInfoElements.length > 0) {
+      personalInfoElements[0].textContent = userData.nombre;
+
+      personalInfoElements[1].textContent =
+        userData.telefonoCelular || "No especificado";
+
+      personalInfoElements[2].textContent = userData.email || "No especificado";
+
+      if (userData.fechaNacimiento) {
+        const [year, month, day] = userData.fechaNacimiento.split("-");
+        const fechaFormateada = `${day}/${month}/${year}`;
+        personalInfoElements[3].textContent = fechaFormateada;
+      } else {
+        personalInfoElements[3].textContent = "No especificada";
+      }
     }
 
-    editButton1.classList.add('d-none');
-    editPageButtonsDiv.classList.remove('d-none');
-    editPageButtonsDiv.classList.add('d-flex');
-}
+    const nameInput = document.getElementById("name");
+    const phoneInput = document.getElementById("phone");
+    const birthDateInput = document.getElementById("birthDate");
 
-function cancelButtonOnClick() {
-    for (const input of profileInputs) {
-        input.classList.add('d-none');
+    if (nameInput) nameInput.value = userData.nombre;
+    if (phoneInput) phoneInput.value = userData.telefonoCelular;
+    if (birthDateInput && userData.fechaNacimiento) {
+      const fecha = new Date(userData.fechaNacimiento);
+      birthDateInput.value = fecha.toISOString().split("T")[0];
     }
-
-    for (const data of profileDataElements) {
-        data.classList.remove('d-none');
-    }
-
-    editPageButtonsDiv.classList.add('d-none');
-    editButton1.classList.remove('d-none');
-}
-
-function editButton2OnClick() {
-    
+  }
 }

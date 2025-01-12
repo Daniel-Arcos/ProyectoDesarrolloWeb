@@ -1,4 +1,7 @@
 import { actualizarProducto } from '../services/ProductoService.js'; 
+import {cerrarSesion} from '../services/AuthenticationService.js'
+const salirButton = document.getElementById('logout');
+salirButton.onclick = () => cerrarSesion();
 
 document.addEventListener('DOMContentLoaded', function () {
     const producto = JSON.parse(sessionStorage.getItem('productoEditar'));
