@@ -7,6 +7,9 @@ import lombok.Data;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DireccionDTO {
+    private Long id;
+    private String nombreCompleto;
+    private String telefonoCelular;
     private String calle;
     private String ciudad;
     private int codigoPostal;

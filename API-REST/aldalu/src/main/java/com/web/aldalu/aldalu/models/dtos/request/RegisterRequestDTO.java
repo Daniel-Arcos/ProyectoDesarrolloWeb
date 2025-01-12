@@ -3,7 +3,6 @@ package com.web.aldalu.aldalu.models.dtos.request;
 import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.web.aldalu.aldalu.models.enums.TipoUsuario;
 import com.web.aldalu.aldalu.utils.PasswordConstraint;
 

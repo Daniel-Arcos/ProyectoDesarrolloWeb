@@ -1,8 +1,5 @@
 package com.web.aldalu.aldalu.models.dtos.request;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.web.aldalu.aldalu.models.enums.EstadoPedido;
 
@@ -16,13 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PedidoRequestDTO {
-    private Long id;
-    private LocalDateTime fechaCreacion;
-    private EstadoPedido estadoPedido;
-    private Float total;
-    private Long idCliente;
-    private Long idDireccion;
-    private Long idTarjeta;
-    private List<ProductoPedidoDTO> productos;
+public class ActualizarEstadoPedidoDTO {
+    private EstadoPedido nuevoEstado;
+    private Long idRepartidor;
 }

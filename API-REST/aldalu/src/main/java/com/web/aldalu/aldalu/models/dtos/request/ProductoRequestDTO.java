@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.web.aldalu.aldalu.models.dtos.ResenaDTO;
-import com.web.aldalu.aldalu.models.entities.Resena;
 import com.web.aldalu.aldalu.models.enums.Categoria;
 
 import lombok.AllArgsConstructor;
