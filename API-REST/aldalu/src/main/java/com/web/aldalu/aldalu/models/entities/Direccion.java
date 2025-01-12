@@ -24,6 +24,8 @@ public class Direccion {
     @GeneratedValue(strategy = GenerationType.IDENTITY) 
     private Long id;
 
+    private String nombreCompleto;
+    private String telefonoCelular;
     private String calle;
     private String ciudad;
     private int codigoPostal;
