@@ -4,9 +4,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.web.aldalu.aldalu.exceptions.dtos.NotFoundException;
+import com.web.aldalu.aldalu.models.dtos.TiendaDTO;
 import com.web.aldalu.aldalu.models.dtos.VendedorDTO;
-import com.web.aldalu.aldalu.models.entities.Tienda;
-import com.web.aldalu.aldalu.models.entities.Vendedor;
 import com.web.aldalu.aldalu.services.impl.VendedorServiceImpl;
 import com.web.aldalu.aldalu.utils.EndpointsConstants;
 
@@ -25,7 +24,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 
@@ -52,9 +50,9 @@ public class VendedorController {
     }
 
     @GetMapping(value = "/{id}/tienda")
-    public ResponseEntity<Tienda> obtenerTiendaVendedor(@NonNull @PathVariable final Long id) {
+    public ResponseEntity<TiendaDTO> obtenerTiendaVendedor(@NonNull @PathVariable final Long id) {
         try {
-            Tienda tienda = vendedorServiceImpl.obtenerTiendaVendedor(id);
+            TiendaDTO tienda = vendedorServiceImpl.obtenerTiendaVendedor(id);
             return ResponseEntity.ok(tienda);
         } catch (NotFoundException e) {
             return ResponseEntity.badRequest().build();
