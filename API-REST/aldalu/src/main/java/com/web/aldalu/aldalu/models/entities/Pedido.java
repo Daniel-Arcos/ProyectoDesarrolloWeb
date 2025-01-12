@@ -1,7 +1,6 @@
 package com.web.aldalu.aldalu.models.entities;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -16,8 +15,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -41,13 +38,13 @@ public class Pedido {
     @JsonBackReference("cliente_pedidos")
     private Cliente cliente;
 
-    @ManyToOne
-    @JoinColumn(name = "tarjeta_id", referencedColumnName = "id", nullable = false)
-    private Tarjeta tarjeta;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "informacion_pago_id", nullable = false)
+    private InformacionPago informacionPago;
 
-    @ManyToOne
-    @JoinColumn(name = "direccion_id", referencedColumnName = "id", nullable = false)
-    private Direccion direccion;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "informacion_envio_id", nullable = false)
+    private InformacionEnvio informacionEnvio;
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PedidoTienda> pedidosTienda;

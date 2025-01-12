@@ -1,15 +1,9 @@
 package com.web.aldalu.aldalu.models.entities;
 
 import java.time.LocalDate;
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
