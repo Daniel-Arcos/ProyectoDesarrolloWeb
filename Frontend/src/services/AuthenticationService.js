@@ -15,6 +15,8 @@ const login = async (email, password) => {
             id: response.data.usuario.id,
             nombre: response.data.usuario.nombre,
             email: response.data.usuario.email,
+            telefonoCelular: response.data.usuario.telefonoCelular,
+            fechaNacimiento: response.data.usuario.fechaNacimiento,
             tipoUsuario: response.data.usuario.tipoUsuario
         }));
 
@@ -36,6 +38,8 @@ const signup = async (formData) => {
             id: response.data.usuario.id,
             nombre: response.data.usuario.nombre,
             email: response.data.usuario.email,
+            telefonoCelular: response.data.usuario.telefonoCelular,
+            fechaNacimiento: response.data.usuario.fechaNacimiento,
             tipoUsuario: data.usuario.tipoUsuario
         }));
         
@@ -45,4 +49,15 @@ const signup = async (formData) => {
     }
 }
 
-export { login, signup };
+const cerrarSesion = () => {
+    Cookies.remove('userData');
+    Cookies.remove('token');
+    Cookies.remove('RefreshToken')
+    Cookies.remove('tiendaData')
+    sessionStorage.clear(); 
+    localStorage.clear();
+
+    window.location.href = '../login.html';
+}
+
+export { login, signup, cerrarSesion };

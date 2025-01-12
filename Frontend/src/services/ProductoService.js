@@ -30,6 +30,20 @@ const guardarProducto = async (datosProducto) => {
     }
 }
 
+const eliminarProducto = async (idProducto) => {
+  try {
+    const token = Cookies.get("Token");
+    await axios.delete(`${baseUrl}/${idProducto}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  } catch (error) {
+    console.error("Error al hacer la petición", error);
+    throw error;
+  }
+};
+
 const actualizarProducto = async (datosProducto) => {
     try {
         const token = Cookies.get('Token');
@@ -46,4 +60,4 @@ const actualizarProducto = async (datosProducto) => {
     }
 }
 
-export { obtenerProductos, guardarProducto, actualizarProducto };
+export { obtenerProductos, guardarProducto, actualizarProducto, eliminarProducto };

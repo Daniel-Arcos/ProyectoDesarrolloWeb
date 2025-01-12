@@ -1,45 +1,48 @@
-const baseUrl = 'http://127.0.0.1:8085/api/v1/tiendas';
+const baseUrl = 'http://127.0.0.1:8085/api/v1/empleados/repartidores';
 
-const guardarTienda = async (tienda) => {
+const obtenerRepartidores = async () => {
     try {
         const token = Cookies.get('Token');
-        const response = await axios.post(baseUrl, tienda, {
+        const response = await axios.get(baseUrl, {
             headers: {
                 'Authorization': `Bearer ${token}` 
             }
         });
         return response.data;
     } catch (error) {
+        console.error('Error al hacer la petición', error);
         throw error;
     }
 }
 
-const obtenerProductosTienda = async (idTienda) => {
+const guardarRepartidor = async (datosRepartidor) => {
     try {
         const token = Cookies.get('Token');
-        const response = await axios.get(`${baseUrl}/${idTienda}/productos`, {
+        const response = await axios.post(baseUrl, datosRepartidor, {
             headers: {
                 'Authorization': `Bearer ${token}` 
             }
         })
         return response.data;
     } catch (error) {
+        console.error('Error al hacer la petición', error);
         throw error;
     }
 }
 
-const obtenerPedidosTienda = async (idTienda) => {
+const obtenerPedidosRepartidor = async (idRepartidor) => {
     try {
         const token = Cookies.get('Token');
-        const response = await axios.get(`${baseUrl}/${idTienda}/pedidos`, {
+        const response = await axios.get(`${baseUrl}/${idRepartidor}/pedidos`, {
             headers: {
                 'Authorization': `Bearer ${token}` 
             }
-        })
+        });
         return response.data;
     } catch (error) {
+        console.error('Error al hacer la petición', error);
         throw error;
     }
 }
 
-export {guardarTienda, obtenerProductosTienda, obtenerPedidosTienda};
+export {guardarRepartidor, obtenerRepartidores, obtenerPedidosRepartidor}
