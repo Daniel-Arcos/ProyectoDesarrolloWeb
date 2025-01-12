@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartera</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie/dist/js.cookie.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
+<body>
+    <header>
+        <div class="container-fluid">
+            <div class="row py-3 border-bottom">
+
+                <div class="col-sm-4 col-lg-3 text-center text-sm-start">
+                    <div class="main-logo">
+                        <a href="./dashboard.html">
+                            <img src="../../assets/images/ALDALU.png" alt="logo" class="img-fluid"
+                                style="max-height: 80px;">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 offset-sm-2 offset-md-0 col-lg-5 d-none d-lg-block">
+                    <div class="search-bar row bg-light p-2 my-2 rounded-4">
+                        <div class="col-md-4 d-none d-md-block">
+                            <select class="form-select border-0 bg-transparent">
+                                <option>Categorías</option>
+                                <option>Electrónica</option>
+                                <option>Muebles</option>
+                                <option>Moda</option>
+                                <option>Salud</option>
+                                <option>Belleza</option>
+                                <option>Alimentos</option>
+                                <option>Deportes</option>
+                                <option>Juguetes</option>
+                                <option>Libros</option>
+                            </select>
+                        </div>
+                        <div class="col-11 col-md-7">
+                            <form id="search-form" class="text-center" action="index.html" method="post">
+                                <input type="text" class="form-control border-0 bg-transparent"
+                                    placeholder="Buscar un producto">
+                            </form>
+                        </div>
+                        <div class="col-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path fill="currentColor"
+                                    d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z">
+                                </path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="col-sm-8 col-lg-4 d-flex justify-content-end gap-5 align-items-center mt-4 mt-sm-0 justify-content-center justify-content-sm-end">
+                    <a href="./profile.html" class="text-decoration-none text-dark">
+                        <div class="ms-auto d-flex align-items-center rounded rounded-pill px-3 bg-dark-subtle"
+                            type="button">
+                            <span class="navbar-text me-3">
+                                <i class="bi bi-person-circle me-2"></i>
+                                <span id="user-name">Nombre del usuario</span>
+                            </span>
+                        </div>
+                    </a>
+                    <div class="cart text-end d-none d-lg-block me-2">
+                        <div class="border-0 bg-transparent d-flex flex-column gap-2 lh-1" type="button"
+                            data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
+                            <span class="fs-6 fw-bold text-muted">Tu carrito</span>
+                            <span class="cart-total fs-5 fw-bold">$0.00</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+    </header>
+    <div class="container mt-4">
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="./profile.html" class="text-decoration-none text-dark">Inicio</a>
+                </li>
+                <li class="breadcrumb-item active">Cartera</li>
+            </ol>
+        </nav>
+
+        <h1 class="mb-4">Cartera</h1>
+
+        <div class="mb-4">
+            <h2 class="h5 text-muted">Tarjetas de crédito y débito guardadas</h2>
+            <p class="text-muted">
+                Guarda los datos de tu tarjeta para futuras compras sin problemas.
+                Ten la seguridad de que nuestras
+                medidas de seguridad
+                garantizan la protección de tu información.
+            </p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="border rounded p-4 d-flex justify-content-center align-items-center"
+                    style="min-height: 200px;">
+                    <button class="btn btn-dark btn-lg" data-bs-toggle="modal" data-bs-target="#addCardModal">
+                        <i class="fas fa-plus me-2"></i> Añadir una nueva tarjeta
+                    </button>
+                </div>
+            </div>
+
+            <div id="tarjetasContainer" class="col-md-6">
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="modal fade" id="addCardModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Añadir nueva tarjeta</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="cardForm">
+                        <div class="mb-3">
+                            <label class="form-label">Número de tarjeta</label>
+                            <input type="text" class="form-control" name="numeroTarjeta" maxlength="16" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Nombre del titular</label>
+                            <input type="text" class="form-control" name="nombreTitular" required>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <label class="form-label">Mes de vencimiento</label>
+                                <select class="form-select" name="mesVencimiento" required>
+                                    <option value="">Seleccionar mes</option>
+                                    <option value="01">01</option>
+                                    <option value="02">02</option>
+                                    <option value="03">03</option>
+                                    <option value="04">04</option>
+                                    <option value="05">05</option>
+                                    <option value="06">06</option>
+                                    <option value="07">07</option>
+                                    <option value="08">08</option>
+                                    <option value="08">09</option>
+                                    <option value="08">10</option>
+                                    <option value="08">11</option>
+                                    <option value="08">12</option>
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label">Año de vencimiento</label>
+                                <select class="form-select" name="anoVencimiento" required>
+                                    <option value="">Seleccionar mes</option>
+                                    <option value="25">25</option>
+                                    <option value="26">26</option>
+                                    <option value="27">27</option>
+                                    <option value="28">28</option>
+                                    <option value="29">29</option>
+                                    <option value="30">30</option>
+                                    <option value="31">31</option>
+                                    <option value="32">32</option>
+                                    <option value="33">33</option>
+                                    <option value="34">34</option>
+                                    <option value="35">35</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Código de seguridad</label>
+                            <input type="password" class="form-control" name="codigoSeguridad" maxlength="3" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Emisor de tarjeta</label>
+                            <select class="form-select" name="emisorTarjeta" required>
+                                <option value="">Seleccionar emisor</option>
+                                <option value="BBVA">BBVA</option>
+                                <option value="NU">NU</option>
+                                <option value="BANCOPPEL">BANCOPPEL</option>
+                                <option value="HSBC">HSBC</option>
+                                <option value="SANTANDER">SANTANDER</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" form="cardForm" class="btn btn-dark">Guardar tarjeta</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script src="../../events/card.details.handler.js" type="module"></script>
+</body>
+
+</html>
