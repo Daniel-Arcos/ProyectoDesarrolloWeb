@@ -33,8 +33,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 function limpiarFormulario(formId) {
-    document.getElementById(formId).reset();
-    
+    const form = document.getElementById(formId);
+    form.reset()
     if (formId === 'addAddressForm') {
         document.getElementById('latitude').value = '';
         document.getElementById('longitude').value = '';
@@ -250,7 +250,7 @@ document.getElementById('saveAddressBtn').addEventListener('click', async functi
         
         const modal = bootstrap.Modal.getInstance(document.getElementById('addAddressModal'));
         modal.hide();
-        limpiarFormulario();
+        limpiarFormulario("addAddressForm");
         
     } catch (error) {
         console.error('Error al guardar la dirección:', error);

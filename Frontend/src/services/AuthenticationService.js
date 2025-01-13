@@ -40,7 +40,7 @@ const signup = async (formData) => {
             email: response.data.usuario.email,
             telefonoCelular: response.data.usuario.telefonoCelular,
             fechaNacimiento: response.data.usuario.fechaNacimiento,
-            tipoUsuario: data.usuario.tipoUsuario
+            tipoUsuario: response.data.usuario.tipoUsuario
         }));
         
         return response.data;

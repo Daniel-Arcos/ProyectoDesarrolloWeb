@@ -69,7 +69,7 @@ function displayOrderInfo(order) {
                         }</p>
                         ${
                           store.estadoPedidoTienda !== "RECIBIDO_EN_ALMACEN"
-                            ? `<button class="btn btn-success update-store-state">
+                            ? `<button class="btn btn-success update-store-state" data-store-id="${store.id}">
                                 Confirmar como recibido en almacén
                             </button>`
                             : '<span class="badge bg-success">Recibido en almacén</span>'
@@ -79,8 +79,9 @@ function displayOrderInfo(order) {
             `
     )
     .join("");
-    document.querySelectorAll(".update-store-state").forEach((button)=> {
-        button.addEventListener('click', () => confirmStoreOrder(order.id))
+    
+    document.querySelectorAll(".update-store-state").forEach((button) => {
+        button.addEventListener('click', () => confirmStoreOrder(button.dataset.storeId))
     })
 }
 
@@ -116,6 +117,7 @@ function displayProducts(products) {
 
 function displayDeliveryPeople(deliveryPeople, idRepartidor) {
   const select = document.getElementById("deliveryPerson");
+  select.innerHTML = ""
   deliveryPeople.forEach((person) => {
     const option = document.createElement("option");
     option.value = person.id;

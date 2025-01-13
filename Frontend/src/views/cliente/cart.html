@@ -10,6 +10,7 @@
     <link href="/src/styles/cart.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie/dist/js.cookie.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 
 <body>
@@ -109,6 +110,14 @@
         </div>
     </section>
     <script src="../../services/CartService.js" type="module"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const userData = JSON.parse(Cookies.get("userData"));
+            if (userData && userData.nombre) {
+              document.getElementById("user-name").textContent = userData.nombre;
+            }
+                  });
+    </script>
 </body>
 
 </html>
