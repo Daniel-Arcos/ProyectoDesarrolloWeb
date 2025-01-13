@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.web.aldalu.aldalu.models.dtos.ProductoPedidoDTO;
 import com.web.aldalu.aldalu.models.enums.EstadoPedido;
 
 import lombok.AllArgsConstructor;
@@ -18,7 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PedidoRequestDTO {
-    
+    private Long id;
     private LocalDateTime fechaCreacion;
     private EstadoPedido estadoPedido;
     private Float total;

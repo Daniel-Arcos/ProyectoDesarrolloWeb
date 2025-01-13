@@ -5,10 +5,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.web.aldalu.aldalu.exceptions.dtos.NotFoundException;
 import com.web.aldalu.aldalu.models.dtos.DireccionDTO;
+import com.web.aldalu.aldalu.models.dtos.request.ClienteDTO;
 import com.web.aldalu.aldalu.models.dtos.request.TarjetaRequestDTO;
+import com.web.aldalu.aldalu.models.dtos.response.PedidoResponseDTO;
 import com.web.aldalu.aldalu.models.dtos.response.TarjetaDTO;
-import com.web.aldalu.aldalu.models.entities.Direccion;
-import com.web.aldalu.aldalu.models.entities.Tarjeta;
 import com.web.aldalu.aldalu.services.IClienteService;
 import com.web.aldalu.aldalu.utils.EndpointsConstants;
 
@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
@@ -35,6 +34,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class ClienteController {
     
     private final IClienteService clienteServiceImpl;
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<ClienteDTO> actualizarCliente(@NonNull @PathVariable final Long id, @NonNull @Valid @RequestBody final ClienteDTO clienteDTO) {
+        try {
+            ClienteDTO clienteActualizado = clienteServiceImpl.actualizarCliente(id, clienteDTO);
+            return ResponseEntity.ok(clienteActualizado);
+        } catch (NotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     @GetMapping(value = "/{idCliente}/tarjetas")
     public ResponseEntity<List<TarjetaDTO>> obtenerTarjetasCliente (@NonNull @PathVariable final Long idCliente) {
@@ -60,6 +69,16 @@ public class ClienteController {
         }
     }
 
+    @DeleteMapping(value = "/tarjetas/{idTarjeta}")
+    public ResponseEntity<?> eliminarTarjeta(@NonNull @PathVariable final Long idTarjeta) {
+        try {
+            clienteServiceImpl.eliminarTarjeta(idTarjeta);
+            return ResponseEntity.noContent().build();
+        } catch (NotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    } 
+
     @GetMapping(value = "/{idCliente}/direcciones")
     public ResponseEntity<List<DireccionDTO>> obtenerDireccionesCliente (@NonNull @PathVariable final Long idCliente) {
         try {
@@ -83,14 +102,37 @@ public class ClienteController {
             return ResponseEntity.badRequest().build();
         }
     }
-    
-    // @PutMapping(value = "/{id}/tarjetas/{idTarjeta}")
-    // public List<Tarjeta> actualizarTarjeta (@NonNull @PathVariable final Long id) {
-        
-    // }
 
-    // @DeleteMapping(value = "/{id}/tarjetas/{idTarjeta}")
-    // public List<Tarjeta> eliminarTarjeta (@NonNull @PathVariable final Long id) {
-        
-    // }
+    @PutMapping(value = "/direcciones/{id}")
+    public ResponseEntity<DireccionDTO> actualizarDireccion(@NonNull @PathVariable final Long id, @NonNull @Valid @RequestBody final DireccionDTO direccionDTO) {
+        try {
+            DireccionDTO direccionActualizada = clienteServiceImpl.actualizarDirecccion(id, direccionDTO);
+            return ResponseEntity.ok(direccionActualizada);
+        } catch (NotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping(value = "/direcciones/{idDireccion}")
+    public ResponseEntity<?> eliminarDirecccion(@NonNull @PathVariable final Long idDireccion) {
+        try {
+            clienteServiceImpl.eliminarDireccion(idDireccion);
+            return ResponseEntity.noContent().build();
+        } catch (NotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }   
+
+    @GetMapping(value = "/{idCliente}/pedidos")
+    public ResponseEntity<List<PedidoResponseDTO>> obtenerPedidosCliente (@NonNull @PathVariable final Long idCliente) {
+        try {
+            List<PedidoResponseDTO> pedidos = clienteServiceImpl.obtenerPedidosCliente(idCliente);
+            return ResponseEntity.ok(pedidos);
+        } catch (NotFoundException e) {
+            return ResponseEntity.badRequest().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    
 }

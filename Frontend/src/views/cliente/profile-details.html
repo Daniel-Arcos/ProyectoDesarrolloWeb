@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del perfil</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie/dist/js.cookie.min.js"></script>
+    <style>
+        .breadcrumb-item+.breadcrumb-item::before {
+            content: ">";
+        }
+
+        .card {
+            border-radius: 8px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .edit-button {
+            border: 1px solid #333;
+            border-radius: 20px;
+            padding: 0.5rem 1rem;
+            color: #333;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .edit-button:hover {
+            background-color: #f8f9fa;
+        }
+
+        .card-header {
+            background-color: transparent;
+            border-bottom: none;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-body {
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            margin: 0;
+            font-weight: 500;
+        }
+
+        .address-card {
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .address-actions {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .address-action-btn {
+            border: 1px solid #333;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+        }
+
+        .address-action-btn:hover {
+            background-color: #f8f9fa;
+        }
+
+        .add-address-btn {
+            border: 2px solid #333;
+            border-radius: 25px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            text-decoration: none;
+            color: #333;
+            display: inline-block;
+        }
+
+        .add-address-btn:hover {
+            background-color: #f8f9fa;
+        }
+
+        .personal-info {
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .use-as-default {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container-fluid">
+            <div class="row py-3 border-bottom">
+
+                <div class="col-sm-4 col-lg-3 text-center text-sm-start">
+                    <div class="main-logo">
+                        <a href="./dashboard.html">
+                            <img src="../../assets/images/ALDALU.png" alt="logo" class="img-fluid"
+                                style="max-height: 80px;">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 offset-sm-2 offset-md-0 col-lg-5 d-none d-lg-block">
+                    <div class="search-bar row bg-light p-2 my-2 rounded-4">
+                        <div class="col-md-4 d-none d-md-block">
+                            <select class="form-select border-0 bg-transparent">
+                                <option>Categorías</option>
+                                <option>Electrónica</option>
+                                <option>Muebles</option>
+                                <option>Moda</option>
+                                <option>Salud</option>
+                                <option>Belleza</option>
+                                <option>Alimentos</option>
+                                <option>Deportes</option>
+                                <option>Juguetes</option>
+                                <option>Libros</option>
+                            </select>
+                        </div>
+                        <div class="col-11 col-md-7">
+                            <form id="search-form" class="text-center" action="index.html" method="post">
+                                <input type="text" class="form-control border-0 bg-transparent"
+                                    placeholder="Buscar un producto">
+                            </form>
+                        </div>
+                        <div class="col-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path fill="currentColor"
+                                    d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z">
+                                </path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="col-sm-8 col-lg-4 d-flex justify-content-end gap-5 align-items-center mt-4 mt-sm-0 justify-content-center justify-content-sm-end">
+                    <a href="./profile.html" class="text-decoration-none text-dark">
+                        <div class="ms-auto d-flex align-items-center rounded rounded-pill px-3 bg-dark-subtle"
+                            type="button">
+                            <span class="navbar-text me-3">
+                                <i class="bi bi-person-circle me-2"></i>
+                                <span id="user-name">Nombre del usuario</span>
+                            </span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+    </header>
+    <div class="container py-4">
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="./profile.html" class="text-decoration-none text-dark">Inicio</a></li>
+                <li class="breadcrumb-item active">Detalles del perfil</li>
+            </ol>
+        </nav>
+
+        <h1 class="h2 mb-4">Detalles del perfil</h1>
+
+        <div class="row">
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="section-title">Información personal</h2>
+                        <a href="#" class="edit-button" data-bs-toggle="modal" data-bs-target="#editPersonalInfoModal">
+                            <i class="fas fa-pen"></i>
+                            Editar
+                        </a>
+
+                        <div class="modal fade" id="editPersonalInfoModal" tabindex="-1"
+                            aria-labelledby="editPersonalInfoModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="editPersonalInfoModalLabel">Editar Información
+                                            Personal</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Cerrar"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="personalInfoForm">
+                                            <div class="mb-3">
+                                                <label for="name" class="form-label">Nombre</label>
+                                                <input type="text" class="form-control" id="name"
+                                                    value="Daniel García Arcos">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="phone" class="form-label">Teléfono</label>
+                                                <input type="tel" class="form-control" id="phone"
+                                                    value="+52 232 220 9725">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="birthDate" class="form-label">Fecha de Nacimiento</label>
+                                                <input type="date" class="form-control" id="birthDate"
+                                                    value="2003-12-28">
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-outline-dark"
+                                            data-bs-dismiss="modal">Cancelar</button>
+                                        <button type="button" class="btn btn-dark">Guardar cambios</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-body">
+                        <div class="personal-info h5">Daniel García Arcos</div>
+                        <div class="personal-info">+52 232 220 9725</div>
+                        <div class="personal-info">arcosdaniel345@gmail.com</div>
+                        <div class="personal-info">28/12/2003</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <section>
+                    <h2 class="h5 mb-3">Direcciones</h2>
+                    <p class="text-muted mb-4">Gestiona tus direcciones para una experiencia de compra rápida y
+                        sencilla.</p>
+
+                    <a href="#" class="add-address-btn mb-4" data-bs-toggle="modal" data-bs-target="#addAddressModal">
+                        Agregar una nueva dirección
+                    </a>
+                    <div class="modal fade" id="addAddressModal" tabindex="-1" aria-labelledby="addAddressModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-lg modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="addAddressModalLabel">Agregar nueva dirección</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Cerrar"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="addAddressForm">
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="nombre" class="form-label">Nombre completo</label>
+                                                <input type="text" class="form-control" id="nombre" required>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="telefonoCelular" class="form-label">Telefono celular</label>
+                                                <input type="text" class="form-control" id="telefonoCelular" required>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="calle" class="form-label">Calle</label>
+                                                <input type="text" class="form-control" id="calle" required>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="numeroExterior" class="form-label">Número Exterior</label>
+                                                <input type="text" class="form-control" id="numeroExterior" required>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="numeroInterior" class="form-label">Número Interior</label>
+                                                <input type="text" class="form-control" id="numeroInterior">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="colonia" class="form-label">Colonia</label>
+                                                <input type="text" class="form-control" id="colonia" required>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="codigoPostal" class="form-label">Código Postal</label>
+                                                <input type="number" class="form-control" id="codigoPostal" required>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="ciudad" class="form-label">Ciudad</label>
+                                                <input type="text" class="form-control" id="ciudad" required>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="entidadFederativa" class="form-label">Entidad
+                                                    Federativa</label>
+                                                <input type="text" class="form-control" id="entidadFederativa" required>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="municipio" class="form-label">Municipio</label>
+                                                <input type="text" class="form-control" id="municipio" required>
+                                            </div>
+                                            <div class="col-12 mb-3">
+                                                <label for="map" class="form-label">Selecciona tu ubicación en el
+                                                    mapa</label>
+                                                <div id="map" style="height: 400px; width: 100%;"></div>
+                                                <input type="hidden" id="latitude">
+                                                <input type="hidden" id="longitude">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-dark"
+                                        data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="button" class="btn btn-dark" id="saveAddressBtn">Guardar
+                                        dirección</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="editAddressModal" tabindex="-1" aria-labelledby="editAddressModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-lg modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="editAddressModalLabel">Editar dirección</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Cerrar"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="editAddressForm">
+                                        <input type="hidden" id="edit-address-id">
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="edit-nombre" class="form-label">Nombre completo</label>
+                                                <input type="text" class="form-control" id="edit-nombre" required>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="edit-telefonoCelular" class="form-label">Telefono
+                                                    celular</label>
+                                                <input type="text" class="form-control" id="edit-telefonoCelular"
+                                                    required>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="edit-calle" class="form-label">Calle</label>
+                                                <input type="text" class="form-control" id="edit-calle" required>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="edit-numeroExterior" class="form-label">Número
+                                                    Exterior</label>
+                                                <input type="text" class="form-control" id="edit-numeroExterior"
+                                                    required>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="edit-numeroInterior" class="form-label">Número
+                                                    Interior</label>
+                                                <input type="text" class="form-control" id="edit-numeroInterior">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="edit-colonia" class="form-label">Colonia</label>
+                                                <input type="text" class="form-control" id="edit-colonia" required>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="edit-codigoPostal" class="form-label">Código Postal</label>
+                                                <input type="number" class="form-control" id="edit-codigoPostal"
+                                                    required>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="edit-ciudad" class="form-label">Ciudad</label>
+                                                <input type="text" class="form-control" id="edit-ciudad" required>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="edit-entidadFederativa" class="form-label">Entidad
+                                                    Federativa</label>
+                                                <input type="text" class="form-control" id="edit-entidadFederativa"
+                                                    required>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="edit-municipio" class="form-label">Municipio</label>
+                                                <input type="text" class="form-control" id="edit-municipio" required>
+                                            </div>
+                                            <div class="col-12 mb-3">
+                                                <label for="edit-map" class="form-label">Selecciona tu ubicación en el
+                                                    mapa</label>
+                                                <div id="edit-map" style="height: 400px; width: 100%;"></div>
+                                                <input type="hidden" id="edit-latitude">
+                                                <input type="hidden" id="edit-longitude">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-dark"
+                                        data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="button" class="btn btn-dark" id="updateAddressBtn">Guardar
+                                        cambios</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMCpitlSaWhnRQ5LNuOeUchSDi9sCO364&callback=initMap&v=weekly"
+        async></script>
+    <script src="../../events/modal-direccion.handler.js" type="module"></script>
+    <script src="../../events/profile-details.handler.js" type="module"></script>
+    <script>
+        let map, marker;
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: 19.5438, lng: -96.9108 },
+                zoom: 14,
+            });
+
+            marker = new google.maps.Marker({
+                position: map.getCenter(),
+                map: map,
+                draggable: true,
+            });
+
+            marker.addListener('dragend', function () {
+                const position = marker.getPosition();
+                document.getElementById('latitude').value = position.lat();
+                document.getElementById('longitude').value = position.lng();
+            });
+
+            const position = marker.getPosition();
+            document.getElementById('latitude').value = position.lat();
+            document.getElementById('longitude').value = position.lng();
+        }
+    </script>
+</body>
+
+</html>

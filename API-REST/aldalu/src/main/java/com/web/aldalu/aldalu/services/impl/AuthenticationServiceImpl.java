@@ -1,8 +1,8 @@
 package com.web.aldalu.aldalu.services.impl;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
-import org.springframework.boot.actuate.autoconfigure.metrics.MetricsProperties.Web.Client;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -16,11 +16,10 @@ import com.web.aldalu.aldalu.models.dtos.request.AuthenticationRequestDTO;
 import com.web.aldalu.aldalu.models.dtos.request.RegisterRequestDTO;
 import com.web.aldalu.aldalu.models.dtos.response.AuthenticationResponseDTO;
 import com.web.aldalu.aldalu.models.entities.Cliente;
-import com.web.aldalu.aldalu.models.entities.EmpleadoAlmacen;
 import com.web.aldalu.aldalu.models.entities.Usuario;
 import com.web.aldalu.aldalu.models.entities.Vendedor;
-import com.web.aldalu.aldalu.models.enums.TipoUsuario;
 import com.web.aldalu.aldalu.repositories.IClienteRepository;
+import com.web.aldalu.aldalu.repositories.IEmpleadoAlmacenRepository;
 import com.web.aldalu.aldalu.repositories.IUsuarioRepository;
 import com.web.aldalu.aldalu.repositories.IVendedorRepository;
 import com.web.aldalu.aldalu.security.services.JwtService;
@@ -40,6 +39,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
     private final IVendedorRepository vendedorRepository;
     private final IClienteRepository clienteRepository;
     private final IUsuarioRepository usuarioRepository;
+    private final IEmpleadoAlmacenRepository empleadoAlmacenRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
@@ -157,22 +157,40 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
     }
 
     private UsuarioDTO construirUsuarioDTO(Usuario usuario) {
-        String nombre = switch (usuario.getTipoUsuario()) {
-            case CLIENTE -> clienteRepository.findById(usuario.getId())
-                .map(Cliente::getNombre)
-                .orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado"));
-            case VENDEDOR -> vendedorRepository.findById(usuario.getId())
-                .map(Vendedor::getNombreVendedor)
-                .orElseThrow(() -> new EntityNotFoundException("Vendedor no encontrado"));
-            default -> throw new IllegalArgumentException("Tipo de usuario no soportado");
-        };
-
+        var detallesUsuario = obtenerDetallesUsuario(usuario);
+    
         return UsuarioDTO.builder()
             .id(usuario.getId())
             .email(usuario.getEmail())
             .tipoUsuario(usuario.getTipoUsuario())
-            .nombre(nombre)
+            .telefonoCelular(detallesUsuario.telefonoCelular())
+            .nombre(detallesUsuario.nombre())
+            .fechaNacimiento(detallesUsuario.fechaNacimiento())
             .build();
     }
+    
+    private DetallesUsuario obtenerDetallesUsuario(Usuario usuario) {
+        return switch (usuario.getTipoUsuario()) {
+            case CLIENTE -> clienteRepository.findById(usuario.getId())
+                .map(cliente -> new DetallesUsuario(
+                    cliente.getNombre(),
+                    cliente.getTelefonoCelular(),
+                    cliente.getFechaNacimiento()))
+                .orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado"));
+            case VENDEDOR -> vendedorRepository.findById(usuario.getId())
+                .map(vendedor -> new DetallesUsuario(
+                    vendedor.getNombreVendedor(),
+                    vendedor.getTelefonoCelular(),
+                    vendedor.getFechaNacimiento()))
+                .orElseThrow(() -> new EntityNotFoundException("Vendedor no encontrado"));
+            case EMPLEADO_ALMACEN -> empleadoAlmacenRepository.findById(usuario.getId())
+                .map(empleado -> new DetallesUsuario(
+                    empleado.getNombreEmpleado(), "", null))
+                .orElseThrow(() -> new EntityNotFoundException("Empleado no encontrado"));
+            default -> throw new IllegalArgumentException("Tipo de usuario no soportado");
+        };
+    }
+    
+    private record DetallesUsuario(String nombre, String telefonoCelular, LocalDate fechaNacimiento) {}    
     
 }

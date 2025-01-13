@@ -23,6 +23,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EmpleadoAlmacen extends Usuario {
+    private String nombreEmpleado;
     private LocalDate fechaIngreso;
     private RolEmpleado rolEmpleado;
 

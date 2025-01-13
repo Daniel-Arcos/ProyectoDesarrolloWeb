@@ -39,4 +39,6 @@ public class ExceptionMessageConstants {
     public static final String CLIENTE_NOT_FOUND = "Cliente no encontrado";
     public static final String DIRECCION_NOT_FOUND = "Direccion no encontrada";
     public static final String TARJETA_NOT_FOUND = "Tarjeta no encontrada";
+    public static final String PEDIDO_NOT_FOUND = "Pedido no encontrado";
+    public static final String EMPLEADO_NOT_FOUND = "Empleado no encontrado";
 }

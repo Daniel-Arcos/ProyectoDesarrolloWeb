@@ -1,11 +1,8 @@
 package com.web.aldalu.aldalu.services.impl;
 
-import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
-import java.util.Optional;
-
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,7 +11,6 @@ import com.web.aldalu.aldalu.exceptions.dtos.NotFoundException;
 import com.web.aldalu.aldalu.models.dtos.request.ProductoRequestDTO;
 import com.web.aldalu.aldalu.models.entities.Producto;
 import com.web.aldalu.aldalu.models.entities.Tienda;
-import com.web.aldalu.aldalu.models.entities.Vendedor;
 import com.web.aldalu.aldalu.repositories.IProductoRepository;
 import com.web.aldalu.aldalu.repositories.ITiendaRepository;
 import com.web.aldalu.aldalu.services.IProductoService;
@@ -56,6 +52,9 @@ public class ProductoServiceImpl implements IProductoService {
         producto.setPrecioVenta(productoDTO.getPrecioVenta());
         producto.setInventario(productoDTO.getInventario());
         producto.setTienda(tienda);
+        if (productoDTO.getImageData() != null) {
+            producto.setImageData(Base64.getDecoder().decode(productoDTO.getImageData()));
+        }
         return convertToDTO(productoRepository.save(producto));
     }
 
@@ -75,7 +74,9 @@ public class ProductoServiceImpl implements IProductoService {
     private void actualizarProductoExistente(Producto productoExistente, ProductoRequestDTO productoRequestDTO) {
         productoExistente.setCategoria(productoRequestDTO.getCategoria());
         productoExistente.setDescripcion(productoRequestDTO.getDescripcion());
-        //PENDIENTE> IMAGENES productoExistente.setImagenes();
+        if (productoRequestDTO.getImageData() != null) {
+            productoExistente.setImageData(Base64.getDecoder().decode(productoRequestDTO.getImageData()));
+        }
         productoExistente.setInventario(productoRequestDTO.getInventario());
         productoExistente.setNombre(productoRequestDTO.getNombre());
         productoExistente.setPrecioVenta(productoRequestDTO.getPrecioVenta());
@@ -99,7 +100,11 @@ public class ProductoServiceImpl implements IProductoService {
     }
 
     private ProductoRequestDTO convertToDTO(Producto producto) {
-        return mapper.map(producto, ProductoRequestDTO.class);
+        ProductoRequestDTO dto = mapper.map(producto, ProductoRequestDTO.class);
+        if (producto.getImageData() != null) {
+            dto.setImageData(Base64.getEncoder().encodeToString(producto.getImageData()));
+        }
+        return dto;
     }
     
 }

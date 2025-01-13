@@ -3,8 +3,9 @@ package com.web.aldalu.aldalu.controllers;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.web.aldalu.aldalu.exceptions.dtos.NotFoundException;
+import com.web.aldalu.aldalu.models.dtos.TiendaDTO;
 import com.web.aldalu.aldalu.models.dtos.VendedorDTO;
-import com.web.aldalu.aldalu.models.entities.Vendedor;
 import com.web.aldalu.aldalu.services.impl.VendedorServiceImpl;
 import com.web.aldalu.aldalu.utils.EndpointsConstants;
 
@@ -15,7 +16,6 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+
 
 
 @RestController
@@ -48,6 +49,17 @@ public class VendedorController {
         return ResponseEntity.notFound().build();
     }
 
+    @GetMapping(value = "/{id}/tienda")
+    public ResponseEntity<TiendaDTO> obtenerTiendaVendedor(@NonNull @PathVariable final Long id) {
+        try {
+            TiendaDTO tienda = vendedorServiceImpl.obtenerTiendaVendedor(id);
+            return ResponseEntity.ok(tienda);
+        } catch (NotFoundException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    
+
     @PostMapping
     public ResponseEntity<VendedorDTO> guardarVendedor(@NonNull @Valid @RequestBody final VendedorDTO vendedor) {
         try {
@@ -59,7 +71,7 @@ public class VendedorController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<VendedorDTO> updateDoctor(@NonNull @PathVariable final Long id, @NonNull @Valid @RequestBody final VendedorDTO vendedorDTO) {
+    public ResponseEntity<VendedorDTO> actualizarVendedor(@NonNull @PathVariable final Long id, @NonNull @Valid @RequestBody final VendedorDTO vendedorDTO) {
         Optional<VendedorDTO> vendedorActualizado = vendedorServiceImpl.actualizarVendedor(id, vendedorDTO);
         if (vendedorActualizado.isPresent()) {
             return ResponseEntity.ok(vendedorActualizado.get());

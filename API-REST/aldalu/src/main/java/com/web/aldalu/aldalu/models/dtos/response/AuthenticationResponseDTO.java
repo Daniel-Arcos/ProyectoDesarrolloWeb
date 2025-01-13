@@ -2,7 +2,6 @@ package com.web.aldalu.aldalu.models.dtos.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.web.aldalu.aldalu.models.dtos.UsuarioDTO;
-import com.web.aldalu.aldalu.models.enums.TipoUsuario;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

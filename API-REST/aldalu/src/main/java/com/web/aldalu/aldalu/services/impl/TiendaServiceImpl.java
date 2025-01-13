@@ -1,7 +1,6 @@
 package com.web.aldalu.aldalu.services.impl;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.web.aldalu.aldalu.exceptions.dtos.NotFoundException;
 import com.web.aldalu.aldalu.models.dtos.TiendaDTO;
+import com.web.aldalu.aldalu.models.dtos.response.PedidoTiendaDTO;
+import com.web.aldalu.aldalu.models.entities.PedidoTienda;
 import com.web.aldalu.aldalu.models.entities.Producto;
 import com.web.aldalu.aldalu.models.entities.Tienda;
 import com.web.aldalu.aldalu.models.entities.Vendedor;
@@ -82,11 +83,26 @@ public class TiendaServiceImpl implements ITiendaService  {
             });
     }
 
-    private Tienda crearTiendaDesdePeticion(TiendaDTO request) {
-        return Tienda.builder()
-            .nombreTienda(request.getNombreTienda())
-            .descripcion(request.getDescripcion())
-            .build();       
+    @Override
+    public List<PedidoTiendaDTO> obtenerPedidosPorTienda(Long id) {
+        Tienda tienda = obtenerTiendaPorId(id);
+        return convertirPedidosTiendaAPedidoTiendaDTO(tienda.getPedidos());
+    }
+
+    private List<PedidoTiendaDTO> convertirPedidosTiendaAPedidoTiendaDTO(List<PedidoTienda> pedidos) {
+        List<PedidoTiendaDTO> pedidosTiendaDTO = new ArrayList<>();
+        pedidos.stream().forEach(p -> {
+            PedidoTiendaDTO pedidoTiendaDTO = new PedidoTiendaDTO();
+            pedidoTiendaDTO.setEstadoPedidoTienda(p.getEstado());
+            pedidoTiendaDTO.setFechaCreacion(p.getFechaCreacion());
+            pedidoTiendaDTO.setId(p.getId());
+            pedidoTiendaDTO.setInformacionPago(p.getPedido().getInformacionPago());
+            pedidoTiendaDTO.setNombreCliente(p.getPedido().getCliente().getNombre());
+            pedidoTiendaDTO.setTotal(p.getSubtotal());
+            pedidosTiendaDTO.add(pedidoTiendaDTO);
+        });
+
+        return pedidosTiendaDTO;
     }
 
     

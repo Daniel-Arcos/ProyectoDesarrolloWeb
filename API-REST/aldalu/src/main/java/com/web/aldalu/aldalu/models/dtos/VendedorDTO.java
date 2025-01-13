@@ -2,7 +2,6 @@ package com.web.aldalu.aldalu.models.dtos;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
